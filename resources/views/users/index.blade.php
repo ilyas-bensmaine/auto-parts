@@ -11,11 +11,6 @@
           <div class="col-sm-6">
             <h1>{{__('Utilisateurs')}}</h1>
           </div>
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -59,14 +54,21 @@
                         @endif
                       </td>
                       <td>
-                         <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#detail_modal">{{__('Detail')}}</a>
+                         <a class="btn btn-default btn-sm" onclick="handleDetail({{$user}}, {{ $user->getRoleNames()}})">{{__('Detail')}}</a>
                          <a class="btn btn-primary btn-sm" href="{{ route('users.edit',$user->id) }}">{{__('Editer')}}</a>
-                         <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete_modal">{{__('Supprimer')}}</a>
+                         @if (Auth::user()->id == $user->id)
+                            <a class="btn btn-danger btn-sm disabled">{{__('Supprimer')}}</a>
+                         @else
+                            <a class="btn btn-danger btn-sm" onclick="handleDelete({{$user->id}})" >{{__('Supprimer')}}</a>
+                         @endif
                       </td>
                     </tr>
                    @endforeach
                   </tbody>
                 </table>
+                {{-- {!! $data->render() !!} --}}
+
+
               </div>
               <!-- /.card-body -->
             </div>
@@ -80,17 +82,28 @@
     </section>
     <!-- /.content -->
   </div>
-  <div class="modal" id="detail_modal" tabindex="-1" role="dialog" >
+  <div class="modal" id="detailModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+          <h5 class="modal-title">{{_('Details')}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
+            <div class="row">
+                <p for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name')   }} :</p>
+                <p id="detailName" class="col-md-4 col-form-label"></p>
+            </div>
+            <div class="row">
+                <p for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }} :</p>
+                <p id="detailEmail" class="col-md-4 col-form-label"></p>
+            </div>
+            <div class="row">
+                <p class="col-md-4 col-form-label text-md-right">{{__('Role' )}} :</p>
+                <p id="detailRole" class="badge badge-success">{{ $v }}</p>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">{{__('Fermer')}}</button>
@@ -99,11 +112,11 @@
     </div>
   </div>
 
-  <div class="modal fade" id="delete_modal">
+  <div class="modal fade" id="deleteModal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Default Modal</h4>
+          <h4 class="modal-title">{{__('Vous êtes sûr ?')}}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -113,7 +126,12 @@
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Non')}}</button>
-          <button type="button" class="btn btn-primary">{{__('Oui')}}</button>
+          <form id="deleteForm" action="" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">{{__('Oui')}}</button>
+          </form>
+
         </div>
       </div>
       <!-- /.modal-content -->
@@ -121,14 +139,20 @@
     <!-- /.modal-dialog -->
   </div>
 
+@endsection
 
+@section('scripts')
+    <script>
+      function handleDetail(user, role ){
+        $('#detailName').text(user.name);
+        $('#detailEmail').text(user.email);
+        $('#detailRole').text(role);
+        $('#detailModal').modal('show');
+      }
 
-
-
-
-  <script>
-    $('#detail_modal').on('shown.bs.modal', function () {
-    $('#detail_modal').trigger('focus')
-    })
-  </script>
+      function handleDelete(id){
+        $('#deleteModal').modal('show');
+        $('#deleteForm').attr('action','/users/'+id);
+      }
+    </script>
 @endsection

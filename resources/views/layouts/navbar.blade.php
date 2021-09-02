@@ -101,7 +101,4 @@
           </ul>
         </nav>
         <!-- /.navbar -->  
-
-
-
 @endsection
