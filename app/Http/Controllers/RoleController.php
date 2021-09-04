@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
@@ -32,8 +33,7 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $roles = Role::orderBy('id','DESC')->paginate(5);
-        return view('roles.index',compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        return view('roles.index',compact('roles'));
     }
     
     /**
@@ -64,7 +64,7 @@ class RoleController extends Controller
         $role->syncPermissions($request->input('permission'));
     
         return redirect()->route('roles.index')
-                        ->with('success','Role created successfully');
+                        ->with('success','Un nouveau rôle créé avec succès');
     }
     /**
      * Display the specified resource.
@@ -120,7 +120,7 @@ class RoleController extends Controller
         $role->syncPermissions($request->input('permission'));
     
         return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully');
+                        ->with('success','Rôle modifié avec succès');
     }
     /**
      * Remove the specified resource from storage.
@@ -130,8 +130,18 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("roles")->where('id',$id)->delete();
-        return redirect()->route('roles.index')
-                        ->with('success','Role deleted successfully');
+        $role = Role::find($id);
+        $avialibaleUsers = User::role($role->name)->get()->count();
+        if ( $avialibaleUsers != 0 ) {
+            return redirect()->route('roles.index')
+            ->with('error',"Ce rôle ne peut être supprimé car il est encore attribué à certains utilisateurs");
+            
+        } else {
+            $role->delete();
+            return redirect()->route('roles.index')
+                            ->with('success','Rôle supprimé avec succès');
+        }
+        
+
     }
 }

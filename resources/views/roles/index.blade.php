@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>{{__('Utilisateurs')}}</h1>
+            <h1>{{__('Gestion des rôles')}}</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -25,56 +25,42 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">{{__('Liste des utilisateurs')}}</h3>
-                @can('user-create')
-                  <a class="btn btn-success float-sm-right" href="{{ route('users.create') }}"> {{__('Create New User')}}</a>                                           
+                <h3 class="card-title">{{__('Liste des rôles')}}</h3>
+                @can('role-create')
+                  <a class="btn btn-success float-sm-right" href="{{ route('roles.create') }}"> {{__('Create New role')}}</a>
                 @endcan
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered">
+                <table class="table table-bordered">
                   <thead>
                     <tr>
                         <th>No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Roles</th>
+                        <th>{{__('Rôle')}}</th>
+                        <th>{{__('Description')}}</th>
                         <th width="15%">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($data as $key => $user)
+                    @foreach ($roles as $key => $role)
                     <tr>
                       <td>{{ $key+1 }}</td>
-                      <td>{{ $user->name }}</td>
-                      <td>{{ $user->email }}</td>
+                      <td>{{ $role->name }}</td>
+                      <td>  ... </td>
                       <td>
-                        @if(!empty($user->getRoleNames()))
-                          @foreach($user->getRoleNames() as $v)
-                             <label class="badge badge-success">{{ $v }}</label>
-                          @endforeach
-                        @endif
-                      </td>
-                      <td>
-                         <a class="btn btn-default btn-sm" onclick="handleDetail({{$user}}, {{ $user->getRoleNames()}})">{{__('Detail')}}</a>
-                         @can('user-edit')
-                            <a class="btn btn-primary btn-sm" href="{{ route('users.edit',$user->id) }}">{{__('Editer')}}</a>
+                         <a class="btn btn-default btn-sm" onclick="handleDetail({{$role}})">{{__('Detail')}}</a>
+                         @can('role-edit')
+                            <a class="btn btn-primary btn-sm" href="{{ route('roles.edit',$role->id) }}">{{__('Editer')}}</a>
                          @endcan
-                          @can('user-delete')
-                            @if (Auth::user()->id == $user->id)
-                                <a class="btn btn-danger btn-sm disabled">{{__('Supprimer')}}</a>
-                            @else
-                                <a class="btn btn-danger btn-sm" onclick="handleDelete({{$user->id}})" >{{__('Supprimer')}}</a>
-                            @endif
-                          @endcan
+                         @can('role-delete')
+                            <a class="btn btn-danger btn-sm" onclick="handleDelete({{$role->id}})" >{{__('Supprimer')}}</a>
+                         @endcan
                       </td>
                     </tr>
                    @endforeach
                   </tbody>
                 </table>
                 {{-- {!! $data->render() !!} --}}
-
-
               </div>
               <!-- /.card-body -->
             </div>
@@ -103,12 +89,8 @@
                 <p id="detailName" class="col-md-4 col-form-label"></p>
             </div>
             <div class="row">
-                <p for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }} :</p>
-                <p id="detailEmail" class="col-md-4 col-form-label"></p>
-            </div>
-            <div class="row">
-                <p class="col-md-4 col-form-label text-md-right">{{__('Role' )}} :</p>
-                <p id="detailRole" class="badge badge-success">{{ $v }}</p>
+                <p for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }} :</p>
+                <p id="detailDescription" class="col-md-4 col-form-label"></p>
             </div>
         </div>
         <div class="modal-footer">
@@ -149,16 +131,16 @@
 
 @section('scripts')
     <script>
-      function handleDetail(user, role ){
-        $('#detailName').text(user.name);
-        $('#detailEmail').text(user.email);
-        $('#detailRole').text(role);
+      function handleDetail( role ){
+        console.log(role)
+        $('#detailName').text(role.name);
+        $('#detailEmail').text(role.description);
         $('#detailModal').modal('show');
       }
 
       function handleDelete(id){
         $('#deleteModal').modal('show');
-        $('#deleteForm').attr('action','/users/'+id);
+        $('#deleteForm').attr('action','/roles/'+id);
       }
     </script>
 @endsection

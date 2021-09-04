@@ -25,7 +25,7 @@
             <li class="nav-item">
                 <a href="" class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
-                    Dashboard
+                     {{__('Dashboard')}}
                 </a>
             </li>
           
@@ -60,14 +60,29 @@
               </li>
             </ul>
           </li>
+          @can('user-list')
           <li class="nav-item">
             <a href="{{ route('users.index') }}" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
-                {{ __('Utilisateur') }}
+                {{ __('Utilisateurs') }}
               </p>
             </a>
           </li>
+          @endcan          
+          @can('role-list')
+          <li class="nav-item">
+            <a href="{{ route('roles.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-user-cog"></i>
+              <p>
+                {{ __('Rôles') }}
+              </p>
+            </a>
+          </li>            
+          @endcan
+
+
+
           <li class="nav-item">
             <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();

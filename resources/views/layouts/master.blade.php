@@ -87,6 +87,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <script> 
         toastr.success( "{{ session('success') }}" )
       </script>
+    @else
+        @if (Session::has('error'))
+          <script>
+              toastr.error( "{{ session('error') }}" )
+          </script>
+        @else
+            
+        @endif
+
     @endif
 
     @yield('scripts')
