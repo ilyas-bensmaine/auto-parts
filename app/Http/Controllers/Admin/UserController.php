@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
     
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,7 +31,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('data'))
+        return view('admin.users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
     
@@ -43,7 +43,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        return view('admin.users.create',compact('roles'));
     }
     
     /**
@@ -52,7 +52,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($language, Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -67,7 +67,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('users.index')->with('success','User created successfully');
+        return redirect()->route('admin.users.index', app()->getLocale())->with('success','User created successfully');
     }
     
     /**
@@ -76,10 +76,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($language, $id)
     {
         $user = User::find($id);
-        return view('users.show',compact('user'));
+        return view('admin.users.show',compact('user'));
     }
     
     /**
@@ -88,14 +88,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($language, $id)
     {
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRoles = $user->roles->pluck('name','name')->all();
-
+        // dd($userRoles);
         $userRole = array_values($userRoles)[0];
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('admin.users.edit',compact('user','roles','userRole'));
     }
     
     /**
@@ -105,7 +105,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($language, Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -127,7 +127,7 @@ class UserController extends Controller
     
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('users.index')
+        return redirect()->route('admin.users.index', app()->getLocale())
                         ->with('success','User updated successfully');
     }
     
@@ -137,10 +137,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($language, $id)
     {
         User::find($id)->delete();
         session()->flash('success','User deleted successfully');
-        return redirect()->route('users.index')->with('success','User deleted successfully');
+        return redirect()->route('admin.users.index', app()->getLocale())->with('success','User deleted successfully');
     }
 }

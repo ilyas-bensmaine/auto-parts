@@ -30,7 +30,7 @@
                 <h3 class="card-title">{{__('Editer un utilisateur existant')}}</h3>
               </div>
               <div class="card-body">
-                <form method="POST" action="{{ route('users.update', $user->id) }}">
+                <form method="POST" action="{{ route('admin.users.update', ['language'=> app()->getlocale(), 'user'=>$user->id]) }}">
                     @csrf
                     @method('PATCH')
                     <div class="form-group row">

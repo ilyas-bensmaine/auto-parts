@@ -27,7 +27,7 @@
               <div class="card-header">
                 <h3 class="card-title">{{__('Liste des utilisateurs')}}</h3>
                 @can('user-create')
-                  <a class="btn btn-success float-sm-right" href="{{ route('users.create') }}"> {{__('Create New User')}}</a>                                           
+                  <a class="btn btn-success float-sm-right" href="{{ route('admin.users.create', ['language'=> app()->getlocale()]) }}"> {{__('Create New User')}}</a>                                           
                 @endcan
               </div>
               <!-- /.card-header -->
@@ -58,13 +58,13 @@
                       <td>
                          <a class="btn btn-default btn-sm" onclick="handleDetail({{$user}}, {{ $user->getRoleNames()}})">{{__('Detail')}}</a>
                          @can('user-edit')
-                            <a class="btn btn-primary btn-sm" href="{{ route('users.edit',$user->id) }}">{{__('Editer')}}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('admin.users.edit', ['language'=> app()->getlocale(), 'user'=>$user->id]) }}">{{__('Editer')}}</a>
                          @endcan
                           @can('user-delete')
                             @if (Auth::user()->id == $user->id)
                                 <a class="btn btn-danger btn-sm disabled">{{__('Supprimer')}}</a>
                             @else
-                                <a class="btn btn-danger btn-sm" onclick="handleDelete({{$user->id}})" >{{__('Supprimer')}}</a>
+                                <a class="btn btn-danger btn-sm" onclick="handleDelete( {{app()->getlocale()}} ,{{$user->id}})" >{{__('Supprimer')}}</a>
                             @endif
                           @endcan
                       </td>
@@ -156,9 +156,9 @@
         $('#detailModal').modal('show');
       }
 
-      function handleDelete(id){
+      function handleDelete(languge,id){
         $('#deleteModal').modal('show');
-        $('#deleteForm').attr('action','/users/'+id);
+        $('#deleteForm').attr('action',languge+'admin/users/'+id);
       }
     </script>
 @endsection

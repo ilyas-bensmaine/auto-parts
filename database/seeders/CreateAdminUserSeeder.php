@@ -17,8 +17,9 @@ class CreateAdminUserSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'name' => 'websolutionstuff', 
-            'email' => 'admin@gmail.com',
+            'name' => 'Admin', 
+            'email' => 'admin@autoparts.com',
+            'is_admin' => true,
             'password' => bcrypt('password')
         ]);
     
@@ -29,5 +30,16 @@ class CreateAdminUserSeeder extends Seeder
         $role->syncPermissions($permissions);
      
         $user->assignRole([$role->id]);
+
+        // simple user
+        $user = User::create([
+            'name' => 'User2', 
+            'email' => 'user2@autoparts.com',
+            'is_admin' => false,
+            'password' => bcrypt('password')
+        ]);
+        $role = Role::create(['name' => 'Simple-user']);
+        $user->assignRole([$role->id]);
+        
     }
 }

@@ -76,6 +76,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+            <!-- InputMask -->
+            <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+            <script src="{{asset('plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+            
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->

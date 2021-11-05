@@ -30,7 +30,7 @@
                 <h3 class="card-title">{{__('Créer un nouveau utilisateur')}}</h3>
               </div>
               <div class="card-body">
-                <form method="POST" action="{{ route('users.store') }}">
+                <form method="POST" action="{{ route('admin.users.store', ['language'=> app()->getlocale()]) }}">
                     @csrf
                     <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>

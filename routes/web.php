@@ -1,9 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
+// use App\Http\Controllers\Admin\RoleController;
+// use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +17,37 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/fr');
 
-Auth::routes();
+Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], function() {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
+    Auth::routes();
+
+    Route::get('/home', ['App\Http\Controllers\HomeController', 'index'])->name('home');
+    //User
+    Route::group([
+            'prefix' => 'user',
+            'as' => 'user.',
+            'namespace' => 'User',
+            'middleware' => ['auth']
+        ],
+        function() {
+            Route::get('/home', function(){ return view('user.home');})->name('home');
+    });
+    //Admin
+    Route::group([
+            'prefix' => 'admin',
+            'as' => 'admin.',
+            'namespace' => 'Admin',
+            'middleware' => ['auth', 'admin']
+        ],
+        function() {
+            Route::get('/home', function(){ return view('admin.home');})->name('home');
+            Route::resource('roles', 'RoleController');
+            Route::resource('users', 'UserController');
+    });
 });
