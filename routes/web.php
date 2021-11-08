@@ -49,5 +49,8 @@ Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], functi
             Route::get('/home', function(){ return view('admin.home');})->name('home');
             Route::resource('roles', 'RoleController');
             Route::resource('users', 'UserController');
+            Route::resource('nationalities', 'NationalityController');
+            Route::resource('types', 'TypeController');
+
     });
 });
