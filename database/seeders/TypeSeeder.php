@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Type;
 use Illuminate\Database\Seeder;
 
@@ -15,5 +16,6 @@ class TypeSeeder extends Seeder
     public function run()
     {
         Type::factory(10)->create();
+        Category::factory(10)->create();
     }
 }

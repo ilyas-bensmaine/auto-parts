@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index')->with(Category::all() , 'categories');
+        $categories = Category::paginate(5);
+        return view('admin.categories.index' , compact('categories'));
     }
-
     /**
      * Show the form for creating a new resource.
      *

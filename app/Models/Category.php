@@ -15,7 +15,7 @@ class Category extends Model
      */
     public function pieces()
     {
-        return $this->belongsToMany(Pieces::class);
+        return $this->belongsToMany(Piece::class);
     }
     public function interesters()
     {
