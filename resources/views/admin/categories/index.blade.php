@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>{{__('Types of vehicules')}}</h1>
+            <h1>{{__('Categories of parts')}}</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -27,7 +27,7 @@
               <div class="card-header">
                 <h3 class="card-title">{{__('Liste des utilisateurs')}}</h3>
                 @can('user-create')
-                  <a class="btn btn-success float-sm-right" href="{{ route('admin.types.create', ['language'=> app()->getlocale()]) }}"> {{__('Create New Category')}}</a>
+                  <a class="btn btn-success float-sm-right" href="{{ route('admin.categories.create', ['language'=> app()->getlocale()]) }}"> {{__('Create New Category')}}</a>
                 @endcan
               </div>
               <!-- /.card-header -->
@@ -38,22 +38,22 @@
                         <th>No</th>
                         <th>Nom de la marque</th>
                         <th>الإسم</th>
-                        <th>nombre de modeles</th>
+                        <th>nombre de pieces</th>
                         <th>nombre des interressé</th>
                         <th width="15%">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($types as $key => $type)
+                    @foreach ($categories as $key => $category)
                     <tr>
                       <td>{{ $key+1 }}</td>
-                       <td>{{ $type->nom }}</td>
-                      <td>{{ $type->noma }}</td>
+                       <td>{{ $category->nom }}</td>
+                      <td>{{ $category->noma }}</td>
                       <td>
-                        {{$type->modeles()->count()}}
+                        {{$category->pieces()->count()}}
                       </td>
                       <td>
-                        {{$type->interesters()->count()}}
+                        {{$category->interesters()->count()}}
                       </td>
                        <td>
                          {{-- <a class="btn btn-default btn-sm" onclick="handleDetail({{$user}}, {{ $user->getRoleNames()}})">{{__('Detail')}}</a>
@@ -73,7 +73,7 @@
                   </tbody>
                 </table>
                 {{-- {!! $data->render() !!} --}}
-                {{$types->links()}}
+                {{-- {{$categori->links()}} --}}
 
               </div>
               <!-- /.card-body -->

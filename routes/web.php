@@ -51,6 +51,7 @@ Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], functi
             Route::resource('users', 'UserController');
             Route::resource('nationalities', 'NationalityController');
             Route::resource('types', 'TypeController');
+            Route::resource('categories', 'CategoryController');
 
     });
 });

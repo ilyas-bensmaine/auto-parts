@@ -16,7 +16,8 @@ class TypeController extends Controller
     public function index()
     {
         // dd(Type::find(1)->nom);
-        return view('admin.types.index')->with(Type::all() , 'types');
+        $types = Type::paginate(5);
+        return view('admin.types.index' , compact('types'));//->with(Type::all() , 'types');
 
     }
 
