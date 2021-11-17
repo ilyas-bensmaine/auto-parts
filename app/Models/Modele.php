@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Modele extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     /**
      * The pieces that belong to the Model_veh
      *

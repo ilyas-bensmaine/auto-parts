@@ -4,20 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMarquesTable extends Migration
+class CreateViewedDemandesTable extends Migration
 {
     /**
      * Run the migrations.
-     *  the marks : benz, renault ....
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create('marques', function (Blueprint $table) {
+        Schema::create('viewed_demandes', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('noma')->nullable();
-            $table->unsignedBigInteger('nationality_id')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('demande_id');
+            $table->boolean('is_saved');
+            // $table->unsignedBigInteger('list_id');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateMarquesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marques');
+        Schema::dropIfExists('viewed_demandes');
     }
 }

@@ -40,6 +40,8 @@ class CategoryController extends Controller
             'nom' ,
             'noma'
         ]));
+        return redirect()->route('admin.categories.index')
+        ->with('success','Une nouvelle catégorie créée avec succès');
     }
 
     /**
@@ -79,7 +81,8 @@ class CategoryController extends Controller
                 'nom' , 'noma'
             ]);
             $category->update($data);
-
+            return redirect()->route('admin.categories.index')
+            ->with('success','Une nouvelle catégorie est mise à jour avec succès');
         }
     }
 

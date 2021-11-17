@@ -21,6 +21,8 @@ class CreateDemandesTable extends Migration
             $table->integer('vue')->default(0);
             $table->string('note' , 500)->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('wilaya_id');
+            $table->enum('statut' , ['active' , 'expirée' , 'satisfaite'])->default('active');
             $table->timestamps();
         });
     }

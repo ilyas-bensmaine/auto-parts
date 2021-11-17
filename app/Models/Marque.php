@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Marque extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     /**
      * Get all of the modeles for the Marque
      *

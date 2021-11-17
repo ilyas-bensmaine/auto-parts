@@ -1,7 +1,9 @@
 <?php
 
-
+use App\Models\Demande;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\Admin\RoleController;
 // use App\Http\Controllers\Admin\UserController;
@@ -18,6 +20,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::redirect('/', '/fr');
+
+Route::get('/13', function () {
+    dd(User::find(3)->notifications[0]->data['demande']['pieces'][0]['compatible_with']);
+});
+Route::get('/12', function () {
+
+    $data = ['user_id' =>1,
+            'wilaya_id' =>1,
+             'note' => 'note 1'];
+    DB::beginTransaction();
+
+    try {
+        $demande = Demande::create($data);
+        $demande->pieces()->attach([5]);
+        DB::commit();
+        // all good
+    }
+    catch (\Exception $e) {
+        DB::rollback();
+        // something went wrong
+    }
+    if($demande)
+        $demande->notify_interresters();
+    // $demande = Demande::find(2);
+
+    // // $demande->pieces()->attach([1]);
+});
+
 
 Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], function() {
     Route::get('/', function () {
@@ -52,6 +82,7 @@ Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], functi
             Route::resource('nationalities', 'NationalityController');
             Route::resource('types', 'TypeController');
             Route::resource('categories', 'CategoryController');
-
+            Route::resource('marques', 'MarqueController');
+            Route::resource('modeles', 'ModeleController');
     });
 });

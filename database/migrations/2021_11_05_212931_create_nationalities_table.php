@@ -15,10 +15,10 @@ class CreateNationalitiesTable extends Migration
     {
         Schema::create('nationalities', function (Blueprint $table) {
             $table->id();
-            $table->string('country');
-            $table->string('nationality');
-            $table->string('countrya')->nullable();       //arabic country name
-            $table->string('nationalitya')->nullable();     //arabic nationality name
+            $table->integer('phone');
+            $table->string('code' ,2);
+            $table->string('name',80 );
+            $table->string('continent',80 );
             $table->timestamps();
         });
     }
