@@ -43,6 +43,8 @@ class TypeController extends Controller
             'nom' ,
             'noma'
         ]));
+        return redirect()->route('admin.type.index')
+            ->with('success','Une nouveau type est créé avec succès');
     }
 
     /**
@@ -82,6 +84,8 @@ class TypeController extends Controller
                 'nom' , 'noma'
             ]);
             $type->update($data);
+            return redirect()->route('admin.type.index')
+            ->with('success','Une nouveau type est mise à jour avec succès');
         }
     }
 

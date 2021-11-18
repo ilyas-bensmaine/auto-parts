@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Marque;
+use App\Models\Piece;
 use Illuminate\Http\Request;
 
-class MarqueController extends Controller
+class PieceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class MarqueController extends Controller
      */
     public function index()
     {
-        $marques = Marque::all();
-        return view('admin.marques.index', compact('marques'));
+        $pieces = Piece::paginate(10);
+        return view('admin.modeles.index',compact('pieces'));
 
     }
 
@@ -38,14 +38,11 @@ class MarqueController extends Controller
      */
     public function store(Request $request)
     {
-        $mark =  Marque::create($request->only([
-            'nom' ,
-            'noma',
-            'nationality_id'
-        ]));
-        $mark->types()->attach($request->types);
-        return redirect()->route('admin.marques.index ')
-        ->with('success','Une nouvelle catégorie créée avec succès');
+    Piece::create($request->only([
+                                 'lib_piece','liba_piece','ref_piece'
+    ]));
+    return redirect()->route('admin.pieces.index')
+            ->with('success','Une nouvelle piece est créée avec succès');
     }
 
     /**
@@ -79,15 +76,16 @@ class MarqueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $mark = Marque::find($id);
-        if ($mark){
+        $piece = Piece::find($id);
+        if ($piece){
             $data = $request->only([
                 'nom' , 'noma' , 'nationality_id'
             ]);
-            $mark->types()->sync($request->types) ;
-            $mark->update($data);
-            return redirect()->route('admin.marques.index ')
-            ->with('success','Une nouvelle cmarque est mise à jour avec succès');
+            $piece->compatibe_with()->sync($request->modeles) ;
+            $piece->categories()->sync($request->categories) ;
+            $piece->update($data);
+            return redirect()->route('admin.pieces.index')
+            ->with('success','Une nouvelle piece est mise à jour avec succès');
         }
     }
 

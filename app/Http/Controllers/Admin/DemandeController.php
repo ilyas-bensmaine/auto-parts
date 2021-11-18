@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Marque;
+use App\Models\Demande;
+use App\Models\Modele;
+use App\Models\Piece;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class MarqueController extends Controller
+class DemandeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +20,8 @@ class MarqueController extends Controller
      */
     public function index()
     {
-        $marques = Marque::all();
-        return view('admin.marques.index', compact('marques'));
-
+        $demandes = Demande::all();
+        return null;
     }
 
     /**
@@ -38,14 +42,38 @@ class MarqueController extends Controller
      */
     public function store(Request $request)
     {
-        $mark =  Marque::create($request->only([
-            'nom' ,
-            'noma',
-            'nationality_id'
-        ]));
-        $mark->types()->attach($request->types);
-        return redirect()->route('admin.marques.index ')
-        ->with('success','Une nouvelle catégorie créée avec succès');
+        //store the demande
+        $data = [];
+        $demander = $request->Auth::id();
+        $piece    = Piece::find($request->piece);
+        $deb      = $request->deb_demande;
+        $fin      = $request->fin_demande;
+        $note     = $request->note;
+        array_push($data , [
+           'user_id'  => $demander,
+           'deb_demande' => $deb     ,
+           'fin_demande' => $fin     ,
+            'note'       => $note
+
+        ]);
+        if($deb){
+            array_push($data , ['deb_demande' => $deb ]);}
+        if($fin){
+            array_push($data , ['fin_demande' => $fin ]);}
+            DB::beginTransaction();
+            try{
+            $demande = Demande::create($data);
+            $demande->pieces()->attach($piece);
+            }
+            catch (Exception $e) {
+                DB::rollBack();
+            }
+            DB::commit();
+            // notify interresters
+            //in the modele
+            if($request->modele){
+                $inter = Modele::find($request->modele)->interresters;
+            }
     }
 
     /**
@@ -79,16 +107,7 @@ class MarqueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $mark = Marque::find($id);
-        if ($mark){
-            $data = $request->only([
-                'nom' , 'noma' , 'nationality_id'
-            ]);
-            $mark->types()->sync($request->types) ;
-            $mark->update($data);
-            return redirect()->route('admin.marques.index ')
-            ->with('success','Une nouvelle cmarque est mise à jour avec succès');
-        }
+        //
     }
 
     /**

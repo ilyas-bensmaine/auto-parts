@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Reponse extends Model
 {
     use HasFactory;
-     /**
+    protected $guarded = [];
+    /**
      * The Responder that belong to the Demande
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

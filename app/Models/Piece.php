@@ -8,15 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Piece extends Model
 {
     use HasFactory;
-    /**
-     * The inerests that belong to the Piece
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function interrested()
+    protected $guarded = [];
+
+
+
+
+    public function interesters()
     {
-        return $this->belongsToMany(User::class,'piece_user', 'piece_id' , 'user_id');
+        return $this->morphToMany(User::class , 'interrestable')->withTimestamps();
     }
+
 
     /**
      * The demandes that belong to the Piece
@@ -33,10 +34,6 @@ class Piece extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function modeles()
-    {
-        return $this->belongsToMany(Modele::class);
-    }
 
     /**
      * The categories that belong to the Piece

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\NewDemandeAdded;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +22,15 @@ class Demande extends Model
         return $this->belongsTo(User::class , 'user_id');
     }
 
-
+    /**
+     * Get the wilaya that owns the Demande
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function wilaya()
+    {
+        return $this->belongsTo(Wilaya::class);
+    }
     /**
      * The pieces that belong to the Demande
      *
@@ -40,12 +50,45 @@ class Demande extends Model
         return $this->hasMany(Reponse::class);
     }
 
-    public function scopeInterrested($query)
-    {
 
-        $inter = $query->table('demande_piece')->join('piece_user' , 'demande_piece.piece_id' , '=' ,'piece_user.piece_id' )
-                                            ->where('demande_piece.demande_id',1);
-        dd($query);// return $inter;
+    public function notify_interresters(){
+        $demander = $this->demander;
+        $ids = [];
+        $piece = $this->pieces[0];
+        $modeles = $piece->compatible_with;
+        $categories = $piece->categories;
+
+
+        foreach  ($piece->interesters as $user)
+            if (!in_array($user->id , $ids) and $user != $demander )
+                    {
+                        array_push($ids ,$user->id);
+                        $user->notify(new NewDemandeAdded($this));
+
+                    }
+
+        foreach ($modeles as $modele)
+            {
+                foreach  ($modele->interesters as $user)
+                 if (!in_array($user->id , $ids) and $user != $demander )
+                         {
+                            array_push($ids ,$user->id);
+                            $user->notify(new NewDemandeAdded($this));
+                         }
+            }
+
+        foreach ($categories as $category)
+            {
+                foreach  ($category->interesters as $user)
+                 if (!in_array($user->id , $ids) and $user != $demander )
+                          {
+                            array_push($ids ,$user->id);
+                            $user->notify(new NewDemandeAdded($this));
+                          }
+            }
+
+
+
     }
 
 }

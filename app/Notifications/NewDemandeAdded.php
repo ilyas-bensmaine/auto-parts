@@ -15,6 +15,7 @@ class NewDemandeAdded extends Notification
      * @var demande
      */
     protected $demande;
+    protected $source;
 
 
     /**
@@ -22,7 +23,7 @@ class NewDemandeAdded extends Notification
      *
      * @return void
      */
-    public function __construct($demande)
+    public function __construct($demande )
     {
         $this->demande = $demande;
     }

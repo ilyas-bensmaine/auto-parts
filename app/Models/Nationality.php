@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Nationality extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     /**
      * Get all of the marques for the Nationality
      *

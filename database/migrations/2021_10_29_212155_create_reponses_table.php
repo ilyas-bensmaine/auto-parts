@@ -19,7 +19,10 @@ class CreateReponsesTable extends Migration
             $table->unsignedBigInteger('demande_id');
             $table->unsignedBigInteger('piece_id');
             $table->integer('quantity_fourni')->nullable();
+            $table->string('disponibility')->nullable();
+            $table->string('wilaya')->nullable();
             $table->integer('prix_offert');
+            $table->boolean('is_choosen')->default(false);
             $table->timestamps();
         });
     }
