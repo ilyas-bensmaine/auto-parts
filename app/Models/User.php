@@ -97,7 +97,10 @@ class User extends Authenticatable
          return $this->morphedByMany(Nationality::class , 'interrestable')->withTimestamps();
      }
 
-
+     public function image()
+     {
+         return $this->morphOne(Image::class, 'imageable');
+     }
      public function viewedDemandes(){
          return $this->belongsToMany(Demande::class, 'viewed_demande', 'user_id', 'demande-id')
                      ->withTimestamps()->withPivot(['is_saved']);

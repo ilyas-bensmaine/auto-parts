@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewDemandeAdded extends Notification
+class CategoryNotification extends Notification
 {
     use Queueable;
     /**
@@ -15,8 +15,6 @@ class NewDemandeAdded extends Notification
      * @var demande
      */
     protected $demande;
-
-
 
     /**
      * Create a new notification instance.

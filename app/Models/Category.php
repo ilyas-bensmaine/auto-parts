@@ -14,9 +14,18 @@ class Category extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pieces()
+/**
+ * Get all of the pieces for the Category
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+ */
+public function pieces()
+{
+    return $this->hasManyThrough(Piece::class, Subcategory::class , 'category_id' , 'subcategory_id','id' , 'id' );
+}
+    public function subcategories()
     {
-        return $this->belongsToMany(Piece::class);
+        return $this->hasMany(Subcategory::class);
     }
     public function interesters()
     {

@@ -1,7 +1,12 @@
 <?php
 
 use App\Models\Demande;
+use App\Models\Marque;
+use App\Models\Modele;
+use App\Models\Piece;
+use App\Models\Subcategory;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +26,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/fr');
 
+
+
+
+
+
+
+
+
+
+
 Route::get('/13', function () {
-    dd(User::find(3)->notifications[0]->data['demande']['pieces'][0]['compatible_with']);
+    // dd(User::find(3)->notifications[0]->data['demande']['pieces'][0]['compatible_with']);
+    // dd(User::find(3)->notifications->where('type' , 'App\Notifications\NewDemandeAdded'));
+    dd(Piece::find(3)->category);
+    dd(Subcategory::find(1)->category);
 });
 Route::get('/12', function () {
 
@@ -34,20 +52,51 @@ Route::get('/12', function () {
     try {
         $demande = Demande::create($data);
         $demande->pieces()->attach([5]);
+        if($demande)
+        $demande->notify_interresters();
         DB::commit();
+        dd($demande);
         // all good
     }
     catch (\Exception $e) {
         DB::rollback();
         // something went wrong
     }
-    if($demande)
-        $demande->notify_interresters();
+
     // $demande = Demande::find(2);
 
     // // $demande->pieces()->attach([1]);
 });
 
+Route::get('/my_demandes', function(){
+    $marques = Marque::all();
+    $modeles = Modele::all();
+    $pieces = Piece::all();
+    return view('admin.demandes.create_demande', compact( ['pieces' , 'marques', 'modeles' ]));
+});
+
+Route::get('show_demande/{id}', function ($id) {
+        $demande = Demande::find($id);
+        return view('admin.demandes.show_demande' , compact('demande'));
+})->name('show_demande');
+
+
+
+Route::post('/demande', function (Request $request) {
+    $data = ['user_id' =>Auth::id(),
+            'wilaya_id' =>1,
+             'note' => $request->note];
+        $demande = Demande::create($data);
+        $demande->pieces()->attach($request->piece);
+        if($demande)
+            $demande->notify_interresters($request->modele, $request->marque);
+        dd($demande);
+
+
+    // $demande = Demande::find(2);
+
+    // // $demande->pieces()->attach([1]);
+})->name('create_demande');
 
 Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], function() {
     Route::get('/', function () {
@@ -56,6 +105,9 @@ Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], functi
 
 
     Auth::routes();
+
+
+
 
     Route::get('/home', ['App\Http\Controllers\HomeController', 'index'])->name('home');
     //User
@@ -67,6 +119,9 @@ Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], functi
         ],
         function() {
             Route::get('/home', function(){ return view('user.home');})->name('home');
+
+            // Route::get('/my_demandes', function(){ return view('admin.demandes.create_demande');})->name('home');
+            // Route::get('/my_demandes', ['DemandeController', 'new_demande'])->name('user.demande.store');
     });
     //Admin
     Route::group([
@@ -84,5 +139,8 @@ Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], functi
             Route::resource('categories', 'CategoryController');
             Route::resource('marques', 'MarqueController');
             Route::resource('modeles', 'ModeleController');
+
+
+
     });
 });

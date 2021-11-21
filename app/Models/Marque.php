@@ -41,5 +41,9 @@ class Marque extends Model
     {
         return $this->belongsToMany(Type::class);
     }
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 
 }

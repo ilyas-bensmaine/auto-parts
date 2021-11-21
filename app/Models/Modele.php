@@ -41,7 +41,10 @@ class Modele extends Model
     {
         return $this->morphToMany(User::class , 'interrestable')->withTimestamps();
     }
-
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 
 
 }

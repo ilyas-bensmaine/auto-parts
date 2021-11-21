@@ -111,7 +111,7 @@ class DatabaseSeeder extends Seeder
                 ( 'YUGO', 'Yugo')
                 ;
 
-        ");
+            ");
         DB::statement("
 
             INSERT INTO `modeles`( `marque_id`, `nom`, `noma`) values
@@ -132,7 +132,7 @@ class DatabaseSeeder extends Seeder
             ( 3, 'AMCENC', 'Encore'),
             ( 3, 'AMCSPIRIT', 'Spirit');
 
-        ");
+         ");
         $user = User::find(1);
         $user->modeles()->attach([1 , 2 , 3 , 4]);
         $user->marques()->attach([1 , 2 , 3 , 4]);
@@ -154,7 +154,7 @@ class DatabaseSeeder extends Seeder
         $pieces = Piece::all();
         foreach($pieces as $piece){
             $piece->compatible_with()->attach([random_int(1,8),random_int(9,16)]);
-            $piece->categories()->attach([random_int(1,10)]);
+            // $piece->subcategories()->attach([random_int(1,10)]);
         }
 
     }
