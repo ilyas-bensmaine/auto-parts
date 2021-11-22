@@ -40,11 +40,10 @@ class Piece extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function categories()
+    public function subcategory()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Subcategory::class);
     }
-
     /**
      * The Modeles that   the Piece is compatible with
      *
@@ -53,5 +52,9 @@ class Piece extends Model
     public function compatible_with()
     {
         return $this->belongsToMany(Modele::class, 'modele_piece', 'piece_id', 'modele_id');
+    }
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }

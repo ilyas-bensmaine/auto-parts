@@ -4,31 +4,33 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-class Reponse extends Model
+
+class Subcategory extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+
     /**
-     * The Responder that belong to the Demande
+     * Get the category that owns the Subcategory
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function Responder()
+    public function category()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Category::class);
     }
     /**
-     * Get the demande that owns the Reponse
+     * Get all of the pieces for the Subcategory
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function demande()
+    public function pieces()
     {
-        return $this->belongsTo(Demande::class);
+        return $this->hasMany(Piece::class);
     }
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
     }
-
 }

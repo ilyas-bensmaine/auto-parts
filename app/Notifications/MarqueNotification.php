@@ -7,15 +7,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewDemandeAdded extends Notification
+class MarqueNotification extends Notification
 {
     use Queueable;
-    /**
+     /**
      * demande sujet
      * @var demande
      */
     protected $demande;
-
 
 
     /**
@@ -63,6 +62,7 @@ class NewDemandeAdded extends Notification
     {
         return [
             'demande' => $this->demande
+
         ];
     }
 }

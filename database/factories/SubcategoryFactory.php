@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Piece;
+use App\Models\Subcategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PieceFactory extends Factory
+class SubcategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Piece::class;
+    protected $model = Subcategory::class;
 
     /**
      * Define the model's default state.
@@ -22,10 +22,9 @@ class PieceFactory extends Factory
     public function definition()
     {
         return [
-            'lib' =>$this->faker->name(),
-            'liba'=>$this->faker->name(),
-            'ref'=>$this->faker->word(),
-            'subcategory_id' => random_int(1,10),
+            'nom' => $this->faker->name(),
+            'noma' => $this->faker->name(),
+            'category_id' => random_int(1,10),
         ];
     }
 }

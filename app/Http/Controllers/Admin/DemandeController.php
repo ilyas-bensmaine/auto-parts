@@ -31,7 +31,7 @@ class DemandeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.demandes.create_demande');
     }
 
     /**
