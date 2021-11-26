@@ -26,9 +26,9 @@ class Reponse extends Model
     {
         return $this->belongsTo(Demande::class);
     }
-    public function image()
+    public function images()
     {
-        return $this->morphOne(Image::class, 'imageable');
+        return $this->morphMany(Image::class, 'imageable');
     }
 
 }

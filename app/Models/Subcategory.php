@@ -33,4 +33,15 @@ class Subcategory extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    public function demandes()
+    {
+        return $this->morphToMany(Demande::class , 'demandable')->withTimestamps();
+    }
+
+    public function interesters()
+    {
+        return $this->morphToMany(User::class , 'interrestable')->withTimestamps();
+    }
+
 }

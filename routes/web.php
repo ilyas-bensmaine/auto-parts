@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Demande;
 use App\Models\Marque;
 use App\Models\Modele;
 use App\Models\Piece;
 use App\Models\Subcategory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -37,66 +39,71 @@ Route::redirect('/', '/fr');
 
 
 Route::get('/13', function () {
-    // dd(User::find(3)->notifications[0]->data['demande']['pieces'][0]['compatible_with']);
-    // dd(User::find(3)->notifications->where('type' , 'App\Notifications\NewDemandeAdded'));
-    dd(Piece::find(3)->category);
-    dd(Subcategory::find(1)->category);
-});
-Route::get('/12', function () {
 
-    $data = ['user_id' =>1,
-            'wilaya_id' =>1,
-             'note' => 'note 1'];
-    DB::beginTransaction();
+        // User::find(3)->categories()->attach(Category::all());
+        // User::find(3)->modeles()->attach(Modele::all());
+        // dd(User::find(3)->notifications[0]->data['demande']['pieces'][0]['compatible_with']);
+        // dd(User::find(3)->unreadNotifications->where('type' , 'App\Notifications\CategoryNotification')->count());
+        // dd(Piece::find(3)->category);
+        // dd(Subcategory::find(1)->category);
+    });
+    Route::get('/12', function () {
+        $data = ['user_id' =>2,
+                'wilaya_id' =>1,
+                'etat_id' =>1,
+                 'note' => 'note 1'];
 
-    try {
-        $demande = Demande::create($data);
-        $demande->pieces()->attach([5]);
-        if($demande)
-        $demande->notify_interresters();
-        DB::commit();
-        dd($demande);
-        // all good
-    }
-    catch (\Exception $e) {
-        DB::rollback();
-        // something went wrong
-    }
+            DB::beginTransaction();
+            try {
+                $demande = Demande::create($data);
+                $demande->categories()->attach([1]);
+                $demande->subcategories()->attach([1]);
+                $demande->marques()->attach([1]);
+                $demande->modeles()->attach([1]);
+                if($demande)
+                    {
+                         $demande->notify_interresters();
+                    }
+                DB::commit();
+                // dd($demande);
+                // all good
+                // dd($demande);
+            }
+            catch (\Exception $e) {
+                DB::rollback();
+                // something went wrong
+            }
+    });
 
-    // $demande = Demande::find(2);
+    // Route::get('/my_demandes', function(){
+    //     $marques = Marque::all();
+    //     $modeles = Modele::all();
+    //     $pieces = Piece::all();
+    //     return view('admin.demandes.create_demande', compact( ['pieces' , 'marques', 'modeles' ]));
+    // });
 
-    // // $demande->pieces()->attach([1]);
-});
-
-Route::get('/my_demandes', function(){
-    $marques = Marque::all();
-    $modeles = Modele::all();
-    $pieces = Piece::all();
-    return view('admin.demandes.create_demande', compact( ['pieces' , 'marques', 'modeles' ]));
-});
-
-Route::get('show_demande/{id}', function ($id) {
-        $demande = Demande::find($id);
-        return view('admin.demandes.show_demande' , compact('demande'));
-})->name('show_demande');
-
-
-
-Route::post('/demande', function (Request $request) {
-    $data = ['user_id' =>Auth::id(),
-            'wilaya_id' =>1,
-             'note' => $request->note];
-        $demande = Demande::create($data);
-        $demande->pieces()->attach($request->piece);
-        if($demande)
-            $demande->notify_interresters($request->modele, $request->marque);
-        dd($demande);
+    // Route::get('show_demande/{id}', function ($id) {
+    //         $demande = Demande::find($id);
+    //         return view('admin.demandes.show_demande' , compact('demande'));
+    // })->name('show_demande');
 
 
-    // $demande = Demande::find(2);
 
-    // // $demande->pieces()->attach([1]);
-})->name('create_demande');
+    // Route::post('/demande', function (Request $request) {
+    //     $data = ['user_id' =>Auth::id(),
+    //             'wilaya_id' =>1,
+    //              'note' => $request->note];
+    //         $demande = Demande::create($data);
+    //         $demande->pieces()->attach($request->piece);
+    //         if($demande)
+    //             $demande->notify_interresters($request->modele, $request->marque);
+    //         dd($demande);
+
+
+    //     // $demande = Demande::find(2);
+
+    //     // // $demande->pieces()->attach([1]);
+// })->name('create_demande');
 
 Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], function() {
     Route::get('/', function () {
@@ -139,8 +146,12 @@ Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], functi
             Route::resource('categories', 'CategoryController');
             Route::resource('marques', 'MarqueController');
             Route::resource('modeles', 'ModeleController');
-
-
-
+            Route::resource('reponses', 'ReponseController');
     });
+});
+
+
+
+Route::get('/hamid', function () {
+    return view('user.home.hamid');
 });

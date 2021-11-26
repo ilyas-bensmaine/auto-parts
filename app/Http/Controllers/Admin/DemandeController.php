@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Demande;
+use App\Models\Image;
 use App\Models\Modele;
 use App\Models\Piece;
+use App\Models\Reponse;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -42,28 +44,50 @@ class DemandeController extends Controller
      */
     public function store(Request $request)
     {
-        //store the demande
-        $data = [];
-        $demander = $request->Auth::id();
-        $piece    = Piece::find($request->piece);
-        $deb      = $request->deb_demande;
-        $fin      = $request->fin_demande;
-        $note     = $request->note;
+        /**
+         * basic infos of the demande:
+         * ---- demander
+         * ---- start and end
+         * ---- etat de la piece demandé
+         * ---- wilaya de la demande
+         * notes + images
+         */
+        //create the demande
+
+        //attach categories and sun categories
+
+        //attach marques and modelels
+
+        //notify the interresterss
+
         array_push($data , [
-           'user_id'  => $demander,
-           'deb_demande' => $deb     ,
-           'fin_demande' => $fin     ,
-            'note'       => $note
+           'user_id'  => $request->Auth::id(),
+           'wilaya_id'   => $request->wilaya          ,
+           'etat_id'     => $request->etat            ,
+           'deb_demande' => $request->deb_demande     ,
+           'fin_demande' => $request->fin_demande     ,
+           'note'       => $request->note
 
         ]);
-        if($deb){
-            array_push($data , ['deb_demande' => $deb ]);}
-        if($fin){
-            array_push($data , ['fin_demande' => $fin ]);}
             DB::beginTransaction();
             try{
-            $demande = Demande::create($data);
-            $demande->pieces()->attach($piece);
+                $demande = Demande::create($data);
+                if($request->hasFile('images')){
+                    //create pieces jointe
+                    foreach($request->images  as $file)
+                    {
+                        $url = $file->store('images');
+                        $im = new Image;
+                        $im->url = $url;
+                        $demande->images()->save($im);
+                    }
+                }
+                $demande->categories()->attach($request->categories);
+                $demande->subcategories()->attach($request->subcategories);
+                $demande->marques()->attach($request->marques);
+                $demande->modeles()->attach($request->modeles);
+
+                $demande->notify_interresters();
             }
             catch (Exception $e) {
                 DB::rollBack();
@@ -119,5 +143,12 @@ class DemandeController extends Controller
     public function destroy($id)
     {
         //
+    }
+    /**
+     * choose a response by  the demander
+     */
+    public function choose_reponse(Reponse $reponse)
+    {
+        $reponse->update([ 'is_choosen' => 1]);
     }
 }

@@ -19,13 +19,17 @@ class Category extends Model
  *
  * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
  */
-public function pieces()
-{
-    return $this->hasManyThrough(Piece::class, Subcategory::class , 'category_id' , 'subcategory_id','id' , 'id' );
-}
+// public function pieces()
+// {
+//     return $this->hasManyThrough(Piece::class, Subcategory::class , 'category_id' , 'subcategory_id','id' , 'id' );
+// }
     public function subcategories()
     {
         return $this->hasMany(Subcategory::class);
+    }
+    public function demandes()
+    {
+        return $this->morphToMany(Demande::class , 'demandable')->withTimestamps();
     }
     public function interesters()
     {

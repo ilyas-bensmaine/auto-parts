@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateAdminUserSeeder::class);
         $this->call(TypeSeeder::class);
         $this->call(PieceSeeder::class);
+        $this->call(EtatSeeder::class);
 
         DB::statement("
                 INSERT INTO `nationalities`( `phone`, `code`, `name`, `continent`) VALUES
@@ -138,24 +139,27 @@ class DatabaseSeeder extends Seeder
         $user->marques()->attach([1 , 2 , 3 , 4]);
         $user->pieces()->attach([1 , 2 , 3 , 4]);
         $user->categories()->attach([1 , 2 , 3 , 4]);
+        $user->subcategories()->attach([1 , 2 , 3 , 4]);
 
         $user = User::find(2);
         $user->modeles()->attach([3,4,5,6]);
         $user->marques()->attach([3,4,5,6]);
         $user->pieces()->attach([3,4,5,6]);
         $user->categories()->attach([3,4,5,6]);
+        $user->subcategories()->attach([3,4,5,6]);
 
         $user = User::find(3);
         $user->modeles()->attach([4,5,6,7]);
         $user->marques()->attach([4,5,6,7]);
         $user->pieces()->attach([4,5,6,7]);
         $user->categories()->attach([4,5,6,7]);
+        $user->subcategories()->attach([4,5,6,7]);
 
-        $pieces = Piece::all();
-        foreach($pieces as $piece){
-            $piece->compatible_with()->attach([random_int(1,8),random_int(9,16)]);
-            // $piece->subcategories()->attach([random_int(1,10)]);
-        }
+        // $pieces = Piece::all();
+        // foreach($pieces as $piece){
+        //     $piece->compatible_with()->attach([random_int(1,8),random_int(9,16)]);
+        //     // $piece->subcategories()->attach([random_int(1,10)]);
+        // }
 
     }
 }
