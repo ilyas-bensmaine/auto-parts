@@ -9,11 +9,13 @@
         "calebporzio/livewire": "^2.7",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "illuminate/console": "^8.73",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "laravelcollective/html": "^6.2",
+        "rinvex/laravel-subscriptions": "^6.0",
         "spatie/laravel-permission": "^4.4"
     },
     "require-dev": {

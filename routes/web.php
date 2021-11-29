@@ -39,7 +39,8 @@ Route::redirect('/', '/fr');
 
 
 Route::get('/13', function () {
-
+        $plan = app('rinvex.subscriptions.plan')->find(1);
+        dd( $plan->getFeatureBySlug('Categories')->value);
         // User::find(3)->categories()->attach(Category::all());
         // User::find(3)->modeles()->attach(Modele::all());
         // dd(User::find(3)->notifications[0]->data['demande']['pieces'][0]['compatible_with']);
@@ -48,7 +49,7 @@ Route::get('/13', function () {
         // dd(Subcategory::find(1)->category);
     });
     Route::get('/12', function () {
-        $data = ['user_id' =>2,
+        $data = ['user_id' =>3,
                 'wilaya_id' =>1,
                 'etat_id' =>1,
                  'note' => 'note 1'];
@@ -56,10 +57,10 @@ Route::get('/13', function () {
             DB::beginTransaction();
             try {
                 $demande = Demande::create($data);
-                $demande->categories()->attach([1]);
-                $demande->subcategories()->attach([1]);
-                $demande->marques()->attach([1]);
-                $demande->modeles()->attach([1]);
+                $demande->categories()->attach([5]);
+                // $demande->subcategories()->attach([1]);
+                $demande->marques()->attach([5]);
+                $demande->modeles()->attach([5]);
                 if($demande)
                     {
                          $demande->notify_interresters();
@@ -71,6 +72,7 @@ Route::get('/13', function () {
             }
             catch (\Exception $e) {
                 DB::rollback();
+                dd($e);
                 // something went wrong
             }
     });

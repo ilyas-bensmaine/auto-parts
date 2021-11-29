@@ -88,58 +88,49 @@ class Demande extends Model
     {
         return $this->hasMany(Reponse::class);
     }
-
     public function notify_interresters(){
-
         $demander = $this->demander;
         $ids = [];
         $modeles = $this->modeles;
         $marques = $this->marques;
-        $category = $this->categories[0];
-        $subcategory = $this->subcategories[0];
-                    foreach ($modeles as $modele)
+        if(count($this->subcategories))
+        {
+            $subcategory = $this->subcategories[0];
+            foreach ($subcategory->interesters as $user)
+                {
+                    if (!in_array($user->id , $ids) and $user != $demander
+                        and ($user->modeles->intersect($modeles)->isNotEmpty()))
                     {
-                        foreach  ($modele->interesters as $user)
-                        {
-                            // dd();
-                            if (!in_array($user->id , $ids) and $user != $demander
-                                and ($user->categories->contains($category)
-                                     or $user->subcategories->contains($subcategory) ))
-                            {
-                                array_push($ids ,$user->id);
-                                $user->notify(new ModeleNotification($this));
-                                // dd($user->notifications);
-                            }
-                        }
+                        array_push($ids ,$user->id);
+                        $user->notify(new ModeleNotification($this));
                     }
-                    foreach  ($subcategory->interesters as $user)
+                    if (!in_array($user->id , $ids) and $user != $demander
+                        and ($user->marques->intersect($marques)->isNotEmpty()))
                     {
-                        if (!in_array($user->id , $ids) and $user != $demander )
-                        {
-                            array_push($ids ,$user->id);
-                            $user->notify(new SubcategoryNotification($this));
-
-                        }
+                        array_push($ids ,$user->id);
+                        $user->notify(new MarqueNotification($this));
                     }
-
-                    foreach ($marques as $marque)
-                    {
-                        foreach  ($marque->interesters as $user )
-                            if ( (!in_array($user->id , $ids) and $user != $demander )
-                                                    and ($user->categories->contains($category)
-                                                    or $user->subcategories->contains($subcategory) ))
-                            {
-                                array_push($ids ,$user->id);
-                                $user->notify(new MarqueNotification($this));
-                            }
-                    }
-
-                    foreach  ($category->interesters as $user)
-                        if (!in_array($user->id , $ids) and $user != $demander )
-                        {
-                            array_push($ids ,$user->id);
-                            $user->notify(new CategoryNotification($this));
-                        }
+                }
+        }
+        if( count($this->categories))
+        {
+            $category = $this->categories[0];
+            foreach ($category->interesters as $user)
+            {
+                if (!in_array($user->id , $ids) and $user != $demander
+                    and ($user->modeles->intersect($modeles)->isNotEmpty()))
+                {
+                    array_push($ids ,$user->id);
+                    $user->notify(new ModeleNotification($this));
+                }
+                if (!in_array($user->id , $ids) and $user != $demander
+                and ($user->marques->intersect($marques)->isNotEmpty()))
+                {
+                    array_push($ids ,$user->id);
+                    $user->notify(new MarqueNotification($this));
+                }
+            }
+        }
 
     }
 

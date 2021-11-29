@@ -92,12 +92,9 @@ class DemandeController extends Controller
             catch (Exception $e) {
                 DB::rollBack();
             }
-            DB::commit();
             // notify interresters
             //in the modele
-            if($request->modele){
-                $inter = Modele::find($request->modele)->interresters;
-            }
+
     }
 
     /**
