@@ -17,7 +17,7 @@ class CreateReponsesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('demande_id');
-            $table->unsignedBigInteger('piece_id');
+            $table->unsignedBigInteger('piece_id')->nullable();
             $table->integer('quantity_fourni')->nullable();
             $table->string('disponibility')->nullable();
             $table->string('wilaya')->nullable();

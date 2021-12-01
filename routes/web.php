@@ -129,6 +129,7 @@ Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], functi
         function() {
             Route::get('/home', function(){ return view('user.home');})->name('home');
 
+
             // Route::get('/my_demandes', function(){ return view('admin.demandes.create_demande');})->name('home');
             // Route::get('/my_demandes', ['DemandeController', 'new_demande'])->name('user.demande.store');
     });

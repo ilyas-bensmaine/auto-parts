@@ -69,10 +69,11 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
         $plan = app('rinvex.subscriptions.plan')->find(1);
         $user->newSubscription('main', $plan);
-
+        if($request->interrests){
+            $this->make_interrests($user , $request->interrests);
+        }
         return redirect()->route('admin.users.index', app()->getLocale())->with('success','User created successfully');
     }
-
     /**
      * Display the specified resource.
      *

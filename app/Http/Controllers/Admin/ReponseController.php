@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Demande;
+use App\Models\Reponse;
+use App\Notifications\ReponseNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReponseController extends Controller
 {
@@ -35,7 +39,19 @@ class ReponseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $demande = Demande::find($request->demande);
+        $user = Auth::id();
+        $reponse =  Reponse::create([
+            'demande_id'=>$demande->id,
+            'user_id'=>$user,
+            'quantity_fourni' => $request->quantity_fourni,
+            'disponibility' => $request->disponibility,
+            'wilaya' => $request->wilaya,
+            'prix_offert' => $request->prix_offertd
+        ]);
+        $demander = $demande->demander;
+        $demander->notify(new ReponseNotification($reponse));
+
     }
 
     /**
