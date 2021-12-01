@@ -6,6 +6,7 @@ use App\Notifications\CategoryNotification;
 use App\Notifications\MarqueNotification;
 use App\Notifications\ModeleNotification;
 use App\Notifications\NewDemandeAdded;
+use App\Notifications\ReponseChoosenNotification;
 use App\Notifications\SubcategoryNotification;
 // use App\Notifications\PieceNotification;
 use Illuminate\Database\Eloquent\Collection;
@@ -53,6 +54,16 @@ class Demande extends Model
     {
         return $this->belongsTo(User::class , 'user_id');
     }
+    /**
+     * The viewers that belong to the Demande
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function viewers()
+    {
+        return $this->belongsToMany(User::class, 'viewed_demandes', 'demande_id', 'user_id')
+                                    ->withTimestamps()->withPivot(['is_saved']);
+    }
     public function etat()
     {
         return $this->belongsTo(User::class);
@@ -88,7 +99,8 @@ class Demande extends Model
     {
         return $this->hasMany(Reponse::class);
     }
-    public function notify_interresters(){
+    public function notify_interresters()
+    {
         $demander = $this->demander;
         $ids = [];
         $modeles = $this->modeles;
@@ -98,13 +110,14 @@ class Demande extends Model
             $subcategory = $this->subcategories[0];
             foreach ($subcategory->interesters as $user)
                 {
-                    if (!in_array($user->id , $ids) and $user != $demander
+                    if (!in_array($user->id , $ids) and $user->id != $demander->id
                         and ($user->modeles->intersect($modeles)->isNotEmpty()))
                     {
+
                         array_push($ids ,$user->id);
                         $user->notify(new ModeleNotification($this));
                     }
-                    if (!in_array($user->id , $ids) and $user != $demander
+                    if (!in_array($user->id , $ids) and $user->id != $demander->id
                         and ($user->marques->intersect($marques)->isNotEmpty()))
                     {
                         array_push($ids ,$user->id);
@@ -114,16 +127,18 @@ class Demande extends Model
         }
         if( count($this->categories))
         {
+
             $category = $this->categories[0];
             foreach ($category->interesters as $user)
             {
-                if (!in_array($user->id , $ids) and $user != $demander
+                if (!in_array($user->id , $ids) and $user->id != $demander->id
                     and ($user->modeles->intersect($modeles)->isNotEmpty()))
                 {
+
                     array_push($ids ,$user->id);
                     $user->notify(new ModeleNotification($this));
                 }
-                if (!in_array($user->id , $ids) and $user != $demander
+                if (!in_array($user->id , $ids) and $user->id != $demander->id
                 and ($user->marques->intersect($marques)->isNotEmpty()))
                 {
                     array_push($ids ,$user->id);
@@ -133,5 +148,4 @@ class Demande extends Model
         }
 
     }
-
 }

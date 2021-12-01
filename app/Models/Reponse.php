@@ -15,7 +15,7 @@ class Reponse extends Model
      */
     public function Responder()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class ,'user_id');
     }
     /**
      * Get the demande that owns the Reponse

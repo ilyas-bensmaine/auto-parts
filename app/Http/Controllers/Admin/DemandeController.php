@@ -9,8 +9,10 @@ use App\Models\Modele;
 use App\Models\Piece;
 use App\Models\Reponse;
 use App\Models\User;
+use App\Notifications\ReponseChoosenNotification;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DemandeController extends Controller
@@ -144,8 +146,28 @@ class DemandeController extends Controller
     /**
      * choose a response by  the demander
      */
-    public function choose_reponse(Reponse $reponse)
+    public function choose_reponse($id)
     {
-        $reponse->update([ 'is_choosen' => 1]);
+        DB::beginTransaction();
+        try{
+                $reponse = Reponse::find($id);
+                $reponse->update([ 'is_choosen' => 1]);
+                $reponse->save();
+                $reponse->Responder->notify(new ReponseChoosenNotification($reponse));
+                DB::commit();
+        }
+        catch (Exception $e){
+            DB::rollBack();
+            dd($e);
+        }
+
+    }
+    public function demande_seen($id){
+        $demande = Demande::find($id);
+        $demande->viewers()->sync([Auth::id()]);
+        $demande->update(['vue' => $demande->vue+1]);
+    }
+    public function demande_saved($id){
+        Demande::find($id)->viewers()->where('user_id' , Auth::id())->update(['is_saved' => true]);
     }
 }

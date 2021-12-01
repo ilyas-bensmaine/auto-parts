@@ -5,8 +5,11 @@ use App\Models\Demande;
 use App\Models\Marque;
 use App\Models\Modele;
 use App\Models\Piece;
+use App\Models\Reponse;
 use App\Models\Subcategory;
 use App\Models\User;
+use App\Notifications\ReponseChoosenNotification;
+use App\Notifications\ReponseNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +52,7 @@ Route::get('/13', function () {
         // dd(Subcategory::find(1)->category);
     });
     Route::get('/12', function () {
-        $data = ['user_id' =>3,
+        $data = ['user_id' =>2,
                 'wilaya_id' =>1,
                 'etat_id' =>1,
                  'note' => 'note 1'];
@@ -57,10 +60,10 @@ Route::get('/13', function () {
             DB::beginTransaction();
             try {
                 $demande = Demande::create($data);
-                $demande->categories()->attach([5]);
+                $demande->categories()->attach([4]);
                 // $demande->subcategories()->attach([1]);
-                $demande->marques()->attach([5]);
-                $demande->modeles()->attach([5]);
+                $demande->marques()->attach([1,7]);
+                $demande->modeles()->attach([1]);
                 if($demande)
                     {
                          $demande->notify_interresters();
@@ -76,6 +79,31 @@ Route::get('/13', function () {
                 // something went wrong
             }
     });
+    Route::get('/14', function () {
+        $demande = Demande::find(1);
+        // $user = Auth::id();
+        $reponse =  Reponse::create([
+            'demande_id'=>$demande->id,
+            'user_id'=>3,
+            'quantity_fourni' => 1,
+            'disponibility' => true,
+            'wilaya' => 5,
+            'prix_offert' => 120
+        ]);
+        $demander = $demande->demander;
+        $demander->notify(new ReponseNotification($reponse));
+    });
+
+    Route::get('/15', function () {
+        $demande = Demande::find(1);
+        $demande->viewers()->sync([1]);
+        $demande->update(['vue' => $demande->vue+1]);
+    });
+    Route::get('/16', function () {
+        // dd(Demande::find(1)->viewers()->where('user_id' , 1)->first()->pivot);
+        Demande::find(1)->viewers()->where('user_id' , 1)->first()->pivot->update(['is_saved' => true]);
+    });
+    Route::get('/15/{id}' , 'Admin\DemandeController@choose_reponse');
 
     // Route::get('/my_demandes', function(){
     //     $marques = Marque::all();
