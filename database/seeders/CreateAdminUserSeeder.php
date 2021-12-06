@@ -42,6 +42,5 @@ class CreateAdminUserSeeder extends Seeder
         $user->assignRole([$role->id]);
         $plan = app('rinvex.subscriptions.plan')->find(1);
         $user->newSubscription('main', $plan);
-
     }
 }

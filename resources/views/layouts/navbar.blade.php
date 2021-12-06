@@ -13,13 +13,12 @@
         @guest
         @if (Route::has('login'))
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('login', ['language'=>app()->getLocale()]) }}">{{ __('Login') }}</a>
+            <a class="nav-link" href="{{ route('login', app()->getLocale()) }}">{{ __('Login') }}</a>
         </li>
         @endif
         @if (Route::has('register'))
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('register', ['language'=>app()->getLocale()]) }}">{{ __('Register')
-                }}</a>
+            <a class="nav-link" href="{{ route('register', app()->getLocale()) }}">{{ __('Register') }}</a>
         </li>
         @endif
         @else
@@ -47,27 +46,9 @@
         </li>
 
         <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-bell"></i>
-                @if (Auth::user()->unreadNotifications()->count() > 0)
-                <span class="badge badge-warning navbar-badge">{{Auth::user()->unreadNotifications()->count()}}</span>
-                @endif
-
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">{{Auth::user()->unreadNotifications()->count()}}
-                    Notifications</span>
-               @foreach (Auth::user()->unreadNotifications as $notification)
-                <div class="dropdown-divider"></div>
-                <a href="{{route('show_demande' , $notification->data['demande']['id'])}}" class="dropdown-item">
-                   Une demande sur la piece:
-                   <strong>{{$notification->data['demande']['pieces'][0]['lib_piece']}}</strong>
-                   a été ajoutée!
-                </a>
-               @endforeach
-
-            </div>
+        <li class="nav-item dropdown" id="app">
+            <example-component :user="{{auth()->user()}}"
+                :unreadnotifications="{{ auth()->user()->unreadNotifications}}"></example-component>
         </li>
         <!-- Full screen -->
         <li class="nav-item">
@@ -75,30 +56,27 @@
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>
+        <!-- User Name && Log out -->
+
         <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" v-pre> <i class="fa fa-language"
-                    style="padding-right: 10%"></i>
+                aria-haspopup="true" aria-expanded="false" v-pre> <i class="fa fa-language" style="padding-right: 10%"></i>
                 {{ strtoupper(App::getLocale()) }}
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
 
-                {{-- @if (count(Route::current()->parameters()) <= 1 ) <a
-                    href="{{ route(Route::currentRouteName(), 'ar') }}" class="dropdown-item">Arabe</a>
+                @if (count(Route::current()->parameters()) <= 1 )
+                    <a href="{{ route(Route::currentRouteName(), 'ar') }}" class="dropdown-item">Arabe</a>
                     <a href="{{ route(Route::currentRouteName(), 'fr') }}" class="dropdown-item">Français</a>
-                    @else
+                @else
                     @php
-                    // dd(json_encode(Route::current()->parameters));
-                    echo '<a
-                        href="{{ route(Route::currentRouteName(), '.json_encode(Route::current()->parameters).') }}"
-                        class="dropdown-item">Arabe</a>';
-                    echo '<a
-                        href="{{ route(Route::currentRouteName(), '.json_encode(Route::current()->parameters).') }}"
-                        class="dropdown-item">Français</a>';
-                    @endphp
-                    @endif --}}
+                        // dd(json_encode(Route::current()->parameters));
+                        echo '<a href="{{ route(Route::currentRouteName(), '.json_encode(Route::current()->parameters).') }}" class="dropdown-item">Arabe</a>';
+                        echo '<a href="{{ route(Route::currentRouteName(), '.json_encode(Route::current()->parameters).') }}" class="dropdown-item">Français</a>';
+                    @endphp 
+                @endif
 
 
             </div>
