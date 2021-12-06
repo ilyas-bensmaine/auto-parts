@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeSeeder::class);
         $this->call(PieceSeeder::class);
         $this->call(EtatSeeder::class);
+        $this->call(CategorySeeder::class);
 
         DB::statement("
                 INSERT INTO `nationalities`( `phone`, `code`, `name`, `continent`) VALUES

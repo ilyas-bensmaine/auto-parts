@@ -30,5 +30,9 @@ class Reponse extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    public function etat()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

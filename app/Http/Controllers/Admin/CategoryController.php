@@ -37,13 +37,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         Category::create($request->only([
-            'nom' ,
+            'nom',
             'noma'
         ]));
         return redirect()->route('admin.categories.index')
         ->with('success','Une nouvelle catégorie créée avec succès');
     }
-
     /**
      * Display the specified resource.
      *

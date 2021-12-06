@@ -18,8 +18,8 @@ class TypeSeeder extends Seeder
     public function run()
     {
         Type::factory(10)->create();
-        Category::factory(10)->create();
-        Subcategory::factory(100)->create();
+        // Category::factory(10)->create();
+        // Subcategory::factory(100)->create();
         // Marque::factory(10)->create();
     }
 }

@@ -5,26 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subcategory extends Model
+class Subcategory2 extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
-
-    /**
-     * Get the category that owns the Subcategory
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function category()
+    public function subcategory()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Subcategory::class);
     }
-    /**
-     * Get all of the pieces for the Subcategory
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function pieces()
     {
         return $this->hasMany(Piece::class);
@@ -42,15 +31,6 @@ class Subcategory extends Model
     public function interesters()
     {
         return $this->morphToMany(User::class , 'interrestable')->withTimestamps();
-    }
-    /**
-     * Get the category that owns the Subcategory
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function subcategory2s()
-    {
-        return $this->hasMany(Category::class);
     }
 
 }

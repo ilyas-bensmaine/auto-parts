@@ -42,8 +42,15 @@ Route::redirect('/', '/fr');
 
 
 Route::get('/13', function () {
-        $plan = app('rinvex.subscriptions.plan')->find(1);
-        dd( $plan->getFeatureBySlug('Categories')->value);
+
+        $user = User::find(11);
+        $user->modeles()->attach([3,4,5,6]);
+        $user->marques()->attach([3,4,5,6]);
+        $user->pieces()->attach([3,4,5,6]);
+        $user->categories()->attach([3,4,5,6]);
+        $user->subcategories()->attach([3,4,5,6]);
+        // $plan = app('rinvex.subscriptions.plan')->find(1);
+        // dd( $plan->getFeatureBySlug('Categories')->value);
         // User::find(3)->categories()->attach(Category::all());
         // User::find(3)->modeles()->attach(Modele::all());
         // dd(User::find(3)->notifications[0]->data['demande']['pieces'][0]['compatible_with']);
@@ -178,6 +185,7 @@ Route::group(['prefix'=>'{language}', 'where'=>['language'=>'[a-z]{2}']], functi
             Route::resource('marques', 'MarqueController');
             Route::resource('modeles', 'ModeleController');
             Route::resource('reponses', 'ReponseController');
+            Route::resource('demandes', 'DemandeController');
     });
 });
 

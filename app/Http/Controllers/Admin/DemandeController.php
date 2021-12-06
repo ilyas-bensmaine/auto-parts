@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Demande;
+use App\Models\Etat;
 use App\Models\Image;
 use App\Models\Modele;
 use App\Models\Piece;
 use App\Models\Reponse;
+use App\Models\Subcategory;
 use App\Models\User;
+use App\Models\Wilaya;
 use App\Notifications\ReponseChoosenNotification;
 use Exception;
 use Illuminate\Http\Request;
@@ -35,7 +39,14 @@ class DemandeController extends Controller
      */
     public function create()
     {
-        return view('admin.demandes.create_demande');
+
+        return view('admin.demandes.create_demande')->with('categories' , Category::all())
+                                                    ->with('subcategories' , Subcategory::all())
+                                                    ->with('wilayas' , Wilaya::all())
+                                                    ->with('etats' , Etat::all())
+                                                    ->with('modeles' , Auth::user()->modeles)
+                                                    ->with('marques' , Auth::user()->marques)
+                                                    ;
     }
 
     /**
@@ -61,19 +72,21 @@ class DemandeController extends Controller
         //attach marques and modelels
 
         //notify the interresterss
-
+        $data = [];
         array_push($data , [
-           'user_id'  => $request->Auth::id(),
+           'user_id'  => Auth::id(),
            'wilaya_id'   => $request->wilaya          ,
            'etat_id'     => $request->etat            ,
-           'deb_demande' => $request->deb_demande     ,
-           'fin_demande' => $request->fin_demande     ,
-           'note'       => $request->note
 
+        //    'deb_demande' => $request->deb_demande     ,
+        //    'fin_demande' => $request->fin_demande     ,
+           'note'       => $request->description
         ]);
+        // dd($data[0]);
             DB::beginTransaction();
             try{
-                $demande = Demande::create($data);
+                $demande = Demande::create($data[0]);
+
                 if($request->hasFile('images')){
                     //create pieces jointe
                     foreach($request->images  as $file)
@@ -84,15 +97,18 @@ class DemandeController extends Controller
                         $demande->images()->save($im);
                     }
                 }
+
                 $demande->categories()->attach($request->categories);
                 $demande->subcategories()->attach($request->subcategories);
                 $demande->marques()->attach($request->marques);
                 $demande->modeles()->attach($request->modeles);
 
                 $demande->notify_interresters();
+                DB::commit();
             }
             catch (Exception $e) {
                 DB::rollBack();
+                dd($e);
             }
             // notify interresters
             //in the modele
@@ -165,9 +181,7 @@ class DemandeController extends Controller
     public function demande_seen($id){
         $demande = Demande::find($id);
         $demande->viewers()->sync([Auth::id()]);
+        $demande->viewers()->where('user_id' , Auth::id())->update(['is_saved' => true]);
         $demande->update(['vue' => $demande->vue+1]);
-    }
-    public function demande_saved($id){
-        Demande::find($id)->viewers()->where('user_id' , Auth::id())->update(['is_saved' => true]);
     }
 }

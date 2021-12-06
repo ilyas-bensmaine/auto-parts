@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Demande;
 use App\Models\Reponse;
 use App\Notifications\ReponseNotification;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReponseController extends Controller
 {
@@ -41,18 +43,26 @@ class ReponseController extends Controller
     {
         $demande = Demande::find($request->demande);
         $user = Auth::id();
-        $reponse =  Reponse::create([
-            'demande_id'=>$demande->id,
-            'user_id'=>$user,
-            'quantity_fourni' => $request->quantity_fourni,
-            'disponibility' => $request->disponibility,
-            'wilaya' => $request->wilaya,
-            'prix_offert' => $request->prix_offertd
-        ]);
-        $demander = $demande->demander;
-        $demander->notify(new ReponseNotification($reponse));
+        DB::beginTransaction();
+        try{
+            $reponse =  Reponse::create([
+                'demande_id'=>$demande->id,
+                'user_id'=>$user,
+                'user_id'=>$request->etat,
+                'quantity_fourni' => $request->quantity_fourni,
+                'disponibility' => $request->disponibility,
+                'wilaya' => $request->wilaya,
+                'prix_offert' => $request->prix_offertd
+            ]);
+            $demander = $demande->demander;
+            $demander->notify(new ReponseNotification($reponse));
+        }
+        catch(Exception $e){
+            DB::rollBack();
+            dd($e);
+        }
+        }
 
-    }
 
     /**
      * Display the specified resource.
@@ -98,5 +108,9 @@ class ReponseController extends Controller
     {
         //
     }
+
+
+
+
 
 }

@@ -18,4 +18,8 @@ class Etat extends Model
     {
         return $this->hasMany(Demande::class);
     }
+    public function reponses()
+    {
+        return $this->hasMany(Reponse::class);
+    }
 }
