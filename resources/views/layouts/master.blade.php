@@ -36,23 +36,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="wrapper">
       <!-- Navbar -->
       @yield('navbar')
-    
+
       <!-- Main Sidebar Container -->
 
       @yield('sidebar')
-    
+
       <!-- Content Wrapper. Contains page content -->
       @yield('content')
       <!-- /.content-wrapper -->
       <footer class="main-footer">
         <strong>Copyright &copy; 2021.
       </footer>
-    
+
 
       <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-    
+
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
@@ -79,7 +79,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- InputMask -->
             <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
             <script src="{{asset('plugins/inputmask/jquery.inputmask.min.js')}}"></script>
-            
+
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
@@ -88,7 +88,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     @if(Session::has('success'))
-      <script> 
+      <script>
         toastr.success( "{{ session('success') }}" )
       </script>
     @else
@@ -97,7 +97,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               toastr.error( "{{ session('error') }}" )
           </script>
         @else
-            
+
         @endif
 
     @endif
@@ -105,6 +105,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @yield('scripts')
 
     <script>
+        @livewireScripts
       $(function () {
         $("#example1").DataTable({
           "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],

@@ -15,7 +15,7 @@ class Reponse extends Model
      */
     public function Responder()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class ,'user_id');
     }
     /**
      * Get the demande that owns the Reponse
@@ -26,9 +26,13 @@ class Reponse extends Model
     {
         return $this->belongsTo(Demande::class);
     }
-    public function image()
+    public function images()
     {
-        return $this->morphOne(Image::class, 'imageable');
+        return $this->morphMany(Image::class, 'imageable');
+    }
+    public function etat()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

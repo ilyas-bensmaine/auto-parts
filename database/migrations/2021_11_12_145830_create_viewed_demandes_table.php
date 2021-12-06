@@ -17,7 +17,7 @@ class CreateViewedDemandesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('demande_id');
-            $table->boolean('is_saved');
+            $table->boolean('is_saved')->default(false);
             // $table->unsignedBigInteger('list_id');
             $table->timestamps();
         });

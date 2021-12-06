@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Demande;
+use App\Models\Reponse;
+use App\Notifications\ReponseNotification;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-class CategoryController extends Controller
+class ReponseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +20,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(5);
-        return view('admin.categories.index' , compact('categories'));
+        return view('admin.reponses.index');
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -36,13 +41,29 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->only([
-            'nom',
-            'noma'
-        ]));
-        return redirect()->route('admin.categories.index')
-        ->with('success','Une nouvelle catégorie créée avec succès');
-    }
+        $demande = Demande::find($request->demande);
+        $user = Auth::id();
+        DB::beginTransaction();
+        try{
+            $reponse =  Reponse::create([
+                'demande_id'=>$demande->id,
+                'user_id'=>$user,
+                'user_id'=>$request->etat,
+                'quantity_fourni' => $request->quantity_fourni,
+                'disponibility' => $request->disponibility,
+                'wilaya' => $request->wilaya,
+                'prix_offert' => $request->prix_offertd
+            ]);
+            $demander = $demande->demander;
+            $demander->notify(new ReponseNotification($reponse));
+        }
+        catch(Exception $e){
+            DB::rollBack();
+            dd($e);
+        }
+        }
+
+
     /**
      * Display the specified resource.
      *
@@ -74,15 +95,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-        if ($category){
-            $data = $request->only([
-                'nom' , 'noma'
-            ]);
-            $category->update($data);
-            return redirect()->route('admin.categories.index')
-            ->with('success','Une nouvelle catégorie est mise à jour avec succès');
-        }
+        //
     }
 
     /**
@@ -93,9 +106,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $cat = Category::find($id);
-        if ($cat){
-            $cat->delete();
-        }
+        //
     }
+
+
+
+
+
 }
