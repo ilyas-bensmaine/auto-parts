@@ -16,13 +16,14 @@ class CreateDemandesTable extends Migration
     {
         Schema::create('demandes', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('deb_demande')->default(Carbon::now());
-            $table->timestamp('fin_demande')->default(Carbon::now()->add(1,'day'));
-            $table->integer('vue')->default(0);
-            $table->string('note' , 500)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('wilaya_id');
-            $table->enum('statut' , ['active' , 'expirée' , 'satisfaite'])->default('active');
+            $table->unsignedBigInteger('etat_id');
+            $table->timestamp(         'deb_demande')->default(Carbon::now());
+            $table->timestamp(         'fin_demande')->default(Carbon::now()->add(3,'day'));
+            $table->integer(           'vue')->default(0);
+            $table->string(            'note' , 500)->nullable();
+            $table->enum(              'statut' , ['active' , 'expirée' , 'satisfaite'])->default('active');
             $table->timestamps();
         });
     }
