@@ -72,9 +72,10 @@ class RegisterController extends Controller
         ]);
         $user->assignRole('Simple-user');
         $admins = User::role('Admin')->get();
-        foreach ($admins as $admin){
-            $admin->notify(new NewUserRegister($user));
-        }
+        // foreach ($admins as $admin){
+        //     $admin->notify(new NewUserRegister($user));
+        // }
+        User::find(2)->notify(new NewUserRegister($user));
         return $user;
     }
 }
