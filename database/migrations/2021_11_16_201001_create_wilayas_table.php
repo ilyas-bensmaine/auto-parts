@@ -15,6 +15,10 @@ class CreateWilayasTable extends Migration
     {
         Schema::create('wilayas', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('arabic_name');
+            $table->decimal('longitude', 9, 6);
+            $table->decimal('latitude', 9, 6);
             $table->timestamps();
         });
     }

@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
 
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     @livewireStyles
 
     {{-- <script src="{{ mix('/js/app.js') }}"></script> --}}
@@ -51,14 +54,13 @@
 
     <script src=" {{asset('plugins/TheSaas/page.min.js')}}"></script>
     <script src=" {{asset('plugins/TheSaas/script.js')}} "></script>
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script> --}}
     <!-- ./Vue Mixed -->
-    <script src=" {{asset('js/app.js')}} "></script>
+    {{-- <script src=" {{asset('js/app.js')}} "></script> --}}
     <!-- Bootstrap 4 -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
     <!-- Toasts -->
     <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
-
     <script>
         function myFunction() {
             toastr.options = {
@@ -81,13 +83,12 @@
             toastr.success("NEW demand ")}
     </script>
 
-    @livewireScripts
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     @yield('scripts')
 
-
-
-
-
+    @livewireScripts
+    @stack('js')
 </body>
 
 </html>
