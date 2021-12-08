@@ -13,11 +13,12 @@
             @livewire('user.layouts.navbar', ['user' => Auth::user()])
 
             <div class="col-4 col-lg-3 text-right">
-                <button class="btn btn-sm btn-round btn-success" data-toggle="modal" data-target="#modal-default"> <i class="fa fa-plus" aria-hidden="true"></i> Demand</button>
+                <button class="btn btn-sm btn-round btn-success" data-toggle="modal" data-target="#modal-default"> <i
+                        class="fa fa-plus" aria-hidden="true"></i> Demand</button>
                 {{-- <a class=" ml-4" href="#"><i class="fa fa-bell fa-lg" aria-hidden="true"></i></a> --}}
                 <a class="btn">
                     <img src="{{asset('dist/img/avatar.png')}}" alt="avatar" class="h-8 w-8 rounded-full">
-                </a>                
+                </a>
             </div>
 
         </div>
@@ -26,15 +27,14 @@
 
 <!-- /.navbar -->
 
+<!-- Login 2 -->
+<div class="modal fade" id="modal-default" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
 
-    <!-- Login 2 -->
-    <div class="modal fade" id="modal-default" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
 
-            @livewire('new-demand-modal')
+        @livewire('new-demand-modal')
 
-        </div>
-      </div>
-
+    </div>
+</div>
 
 @endsection

@@ -4,7 +4,7 @@
         <div class="float-right" >
             Sort by
             <select wire:model="filter" class="border-solid border-grey-light form-select" aria-label="Default select example">
-                <option value="1" selected>{{__('One')}}</option>
+                <option value="" selected>{{__('One')}}</option>
                 <option value="2">{{__('Two')}}</option>
                 <option value="3">{{__('Three')}}</option>
                 <option value="4">{{__('four')}}</option>
