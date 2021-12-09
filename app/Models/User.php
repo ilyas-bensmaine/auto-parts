@@ -107,13 +107,13 @@ class User extends Authenticatable
          return $this->morphOne(Image::class, 'imageable');
      }
      public function viewedDemandes(){
-         return $this->belongsToMany(Demande::class, 'viewed_demande', 'user_id', 'demande-id')
-                     ->withTimestamps()->withPivot(['is_saved']);
-     }
-     public function savedDemandes(){
-         return $this->belongsToMany(Demande::class, 'viewed_demande', 'user_id', 'demande-id')
-                     ->wherePivot('is_saved' , true);
-     }
+        return $this->belongsToMany(Demande::class, 'viewed_demandes', 'user_id', 'demande_id')
+                    ->withTimestamps()->withPivot(['is_saved']);
+    }
+    public function savedDemandes(){
+        return $this->belongsToMany(Demande::class, 'viewed_demande', 'user_id', 'demande_id')
+                    ->wherePivot('is_saved' , true);
+    }
 
 
 

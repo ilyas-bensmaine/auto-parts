@@ -13,7 +13,9 @@
         </div>
     </div>
 
-    @livewire('demand-post')
+    @foreach ($demands as $demand)
+        @livewire('demand-post', ['demand' => $demand])        
+    @endforeach
 
 
 

@@ -46,10 +46,19 @@
 
         <div class="d-flex flex-row">
             <div class="justify-content-start">
+                
+                @if (auth()->user()->viewedDemandes->contains($demand->id))
                 <span>
-                    <a class="text-grey-dark hover:no-underline hover:text-red"><i
-                            class="fa fa-heart fa-lg mr-2"></i> 135</a>
-                </span>
+                    <a href="#" class="text-red hover:no-underline hover:text-grey-dark"><i
+                            class="fa fa-heart fa-lg mr-2"></i> {{ $countHearts }} </a>
+                </span>    
+                @else
+                <span>
+                    <a href="#" class="text-grey-dark hover:no-underline hover:text-red"><i
+                            class="fa fa-heart fa-lg mr-2"></i> {{ $countHearts }} </a>
+                </span>                
+                @endif
+
             </div>
             <div class="col-md-9 text-center">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="collapse"
