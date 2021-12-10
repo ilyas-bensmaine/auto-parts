@@ -107,6 +107,7 @@ class User extends Authenticatable
          return $this->morphOne(Image::class, 'imageable');
      }
      public function viewedDemandes(){
+
         return $this->belongsToMany(Demande::class, 'viewed_demandes', 'user_id', 'demande_id')
                     ->withTimestamps()->withPivot(['is_saved']);
     }
@@ -114,6 +115,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Demande::class, 'viewed_demandes', 'user_id', 'demande_id')
                     ->wherePivot('is_saved' , true);
     }
+
 
     public function wilaya()
     {
