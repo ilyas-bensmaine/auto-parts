@@ -61,7 +61,7 @@ class CategoryNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'newDemande' => $this->demande
+            'demande' => $this->demande
         ];
     }
     public function toBroadcast($notifiable)

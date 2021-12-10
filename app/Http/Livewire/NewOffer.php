@@ -4,12 +4,10 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class DemandePost extends Component
+class NewOffer extends Component
 {
-    public $user;
-    
     public function render()
     {
-        return view('livewire.demande-post');
+        return view('livewire.new-offer');
     }
 }

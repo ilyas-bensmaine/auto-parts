@@ -1,6 +1,6 @@
 [{
         "id": "1",
-        "code": "1",
+        "code": "01",
         "name": "Adrar",
         "arabic_name": "أدرار",
         "region_militaire_id": "3",
@@ -8,7 +8,7 @@
         "latitude": "-0.20396"
     }, {
         "id": "2",
-        "code": "2",
+        "code": "02",
         "name": "Chlef",
         "arabic_name": "الشلف",
         "region_militaire_id": "1",
@@ -16,7 +16,7 @@
         "latitude": "1.3383152"
     }, {
         "id": "3",
-        "code": "3",
+        "code": "03",
         "name": "Laghouat",
         "arabic_name": "الأغواط",
         "region_militaire_id": "4",
@@ -24,7 +24,7 @@
         "latitude": "2.8613457"
     }, {
         "id": "4",
-        "code": "4",
+        "code": "04",
         "name": "Oum El Bouaghi",
         "arabic_name": "أم البواقي",
         "region_militaire_id": "5",
@@ -32,7 +32,7 @@
         "latitude": "6.9542028"
     }, {
         "id": "5",
-        "code": "5",
+        "code": "05",
         "name": "Batna",
         "arabic_name": "باتنة",
         "region_militaire_id": "5",
@@ -40,7 +40,7 @@
         "latitude": "6.1751704"
     }, {
         "id": "6",
-        "code": "6",
+        "code": "06",
         "name": "Béjaïa",
         "arabic_name": "بجاية",
         "region_militaire_id": "5",
@@ -48,7 +48,7 @@
         "latitude": "5.0085855"
     }, {
         "id": "7",
-        "code": "7",
+        "code": "07",
         "name": "Biskra",
         "arabic_name": "بسكرة",
         "region_militaire_id": "4",
@@ -56,7 +56,7 @@
         "latitude": "5.7246709"
     }, {
         "id": "8",
-        "code": "8",
+        "code": "08",
         "name": "Bechar",
         "arabic_name": "بشار",
         "region_militaire_id": "3",
@@ -64,7 +64,7 @@
         "latitude": "-1.8540446"
     }, {
         "id": "9",
-        "code": "9",
+        "code": "09",
         "name": "Blida",
         "arabic_name": "البليدة",
         "region_militaire_id": "1",

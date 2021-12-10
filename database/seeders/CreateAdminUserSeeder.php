@@ -18,6 +18,7 @@ class CreateAdminUserSeeder extends Seeder
     {
         $user = User::create([
             'name' => 'Admin',
+            'wilaya_id' => 5,
             'email' => 'admin@autoparts.com',
             'is_admin' => true,
             'password' => bcrypt('password')
@@ -34,6 +35,7 @@ class CreateAdminUserSeeder extends Seeder
         // simple user
         $user = User::create([
             'name' => 'User2',
+            'wilaya_id' => 5,
             'email' => 'user2@autoparts.com',
             'is_admin' => false,
             'password' => bcrypt('password')

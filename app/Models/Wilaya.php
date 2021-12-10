@@ -18,5 +18,9 @@ class Wilaya extends Model
         return $this->hasMany(Demande::class);
     }
 
+    public function users()
+    {
+        $this->hasMany(User::class);
+    }
 
 }
