@@ -91,9 +91,9 @@
                     </div>
                     @endif
             </div>
-    
-    
-            <button class="btn btn-block btn-primary" type="submit">Login</button>
+
+            <button class="btn btn-primary" type="submit"> Lancer </button>
+
         </form>
 
 

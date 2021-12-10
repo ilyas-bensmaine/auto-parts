@@ -111,10 +111,14 @@ class User extends Authenticatable
                     ->withTimestamps()->withPivot(['is_saved']);
     }
     public function savedDemandes(){
-        return $this->belongsToMany(Demande::class, 'viewed_demande', 'user_id', 'demande_id')
+        return $this->belongsToMany(Demande::class, 'viewed_demandes', 'user_id', 'demande_id')
                     ->wherePivot('is_saved' , true);
     }
 
+    public function wilaya()
+    {
+        return $this->belongsTo(Wilaya::class);
+    }
 
 
 

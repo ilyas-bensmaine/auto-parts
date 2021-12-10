@@ -34,7 +34,7 @@ class NewDemandModal extends Component
     public $selectedMarque="";
     public $selectedModele="";
 
-    public $note=[];
+    public $note;
 
     public $demandImages= [];
 
@@ -113,9 +113,14 @@ class NewDemandModal extends Component
             $newDemand->subcategories()->attach($this->selectedSubCategory);
             $newDemand->marques()->attach($this->selectedMarque);
             $newDemand->modeles()->attach($this->selectedModele);
+            // Notifications
+            $newDemand->notify_interresters();
             DB::commit();
+
+            return redirect()->route('home', app()->getLocale());
         }
         catch (Exception $e) {
+            dd($e);
             DB::rollBack();
         }
     }

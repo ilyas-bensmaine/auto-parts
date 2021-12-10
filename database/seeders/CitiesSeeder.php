@@ -37,6 +37,7 @@ class CitiesSeeder extends Seeder
         foreach ($wilayas_json as $wilaya) {
             $data[] = [
                 'id'          => $wilaya->id,
+                'code'        => $wilaya->code,
                 'name'        => $wilaya->name,
                 'arabic_name' => $wilaya->arabic_name,
                 'longitude'   => $wilaya->longitude,

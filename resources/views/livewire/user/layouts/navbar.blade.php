@@ -1,6 +1,6 @@
 <section class="col-lg-6 navbar-mobile">
     <nav class="nav nav-navbar mx-auto">
-        <a href="#" class="nav-link top-nav-item @if (Route::currentRouteName()== 'user.home') active @endif"><i
+        <a href="#" wire:poll class="nav-link top-nav-item @if (Route::currentRouteName()== 'user.home') active @endif"><i
                 class="fa fa-home fa-lg"><span class="badge badge-warning ">
                     {{auth()->user()->unreadNotifications->count()}} </span></i> </a>
         <a href="#" class="nav-link top-nav-item @if (Route::currentRouteName()== 'user.home') active @endif"><i
