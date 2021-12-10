@@ -2,7 +2,7 @@
     <nav class="nav nav-navbar mx-auto">
         <a href="#" class="nav-link top-nav-item @if (Route::currentRouteName()== 'user.home') active @endif"><i
                 class="fa fa-home fa-lg"><span class="badge badge-warning ">
-                    {{auth()->user()->unreadNotifications->count()}} </span></i> </a>
+                    @livewire('category-notifications-count')</span></i></a>
         <a href="#" class="nav-link top-nav-item @if (Route::currentRouteName()== 'user.home') active @endif"><i
                 class="fa fa-bolt fa-lg"> <span class="badge badge-danger "> 0 </span> </i> </a>
         <a href="#" class="nav-link top-nav-item @if (Route::currentRouteName()== 'user.home') active @endif"><i

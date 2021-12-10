@@ -17,7 +17,18 @@ class TypeSeeder extends Seeder
      */
     public function run()
     {
-        Type::factory(10)->create();
+        Type::create([
+            'nom' => 'Lourd',
+            'noma'=> 'الوزن الثقيل'
+        ]);
+        Type::create([
+            'nom' => 'Leger',
+            'noma'=> 'الوزن الخفيف'
+        ]);
+        Type::create([
+            'nom' => 'Moto',
+            'noma'=> 'الدراجات النارية'
+        ]);
         // Category::factory(10)->create();
         // Subcategory::factory(100)->create();
         // Marque::factory(10)->create();

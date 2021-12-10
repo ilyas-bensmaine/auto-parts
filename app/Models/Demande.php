@@ -8,6 +8,7 @@ use App\Notifications\ModeleNotification;
 use App\Notifications\NewDemandeAdded;
 use App\Notifications\ReponseChoosenNotification;
 use App\Notifications\SubcategoryNotification;
+use App\Notifications\TypeNotification;
 // use App\Notifications\PieceNotification;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -105,6 +106,20 @@ class Demande extends Model
         $ids = [];
         $modeles = $this->modeles;
         $marques = $this->marques;
+        $type  = $this->type;
+        if( in_array ( [1 , 3],$type->id) )
+        {
+            foreach ($type->interesters as $user)
+            {
+                if (!in_array($user->id , $ids) and $user->id != $demander->id)
+                {
+                    array_push($ids ,$user->id);
+                    $user->notify(new TypeNotification($this));
+                }
+                }
+            }
+        else
+    {
         if(count($this->subcategories))
         {
             $subcategory = $this->subcategories[0];
@@ -146,6 +161,6 @@ class Demande extends Model
                 }
             }
         }
-
+    }
     }
 }

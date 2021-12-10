@@ -31,5 +31,8 @@ class Type extends Model
     {
         return $this->morphToMany(User::class , 'interrestable')->withTimestamps();
     }
-
+    public function demandes()
+    {
+        return $this->morphToMany(Demande::class , 'demandable')->withTimestamps();
+    }
 }

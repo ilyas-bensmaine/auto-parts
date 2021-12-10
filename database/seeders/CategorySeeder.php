@@ -146,15 +146,15 @@ class CategorySeeder extends Seeder
                                    "Grille de radiateur"
                                 ],
            "Outillage" =>[
-                           "Outillage divers & coffrets",
+                        "Outillage divers & coffrets",
                        "Eclairage",
-                       "Mesure",
-                       "Kit de tournevis",
-                       "Outils vidange",
-                       "Pinces",
-                       "Pompe à graisse",
-                       "Clé pour bougie d'allumage",
-                       "Clés Allen"
+                    //    "Mesure",
+                    //    "Kit de tournevis",
+                    //    "Outils vidange",
+                    //    "Pinces",
+                    //    "Pompe à graisse",
+                    //    "Clé pour bougie d'allumage",
+                    //    "Clés Allen"
                     ]
         ];
         $subcategories2 = [
@@ -261,8 +261,7 @@ class CategorySeeder extends Seeder
                                "Réservoir de carburant",
                                "Module de dosage (AdBlue)"
                     ],
-                //Visibilité
-
+            //Visibilité
                "Optiques et Phares" =>
                     [
                            "Phare",
@@ -304,7 +303,7 @@ class CategorySeeder extends Seeder
                            "Pompe d'eau de nettoyage, nettoyage des phares",
                            "Bras d'essuie-glace, nettoyage des phares"
                     ],
-                //Direction / Suspension / Train
+            //Direction / Suspension / Train
                "Amortisseurs" =>
                     [
                            "Amortisseurs avant",
@@ -317,6 +316,80 @@ class CategorySeeder extends Seeder
                           "Silent bloc de suspension",
                           "Suspension, corps de l'essieu",
                           "Jeu de bras, suspension de roue"
+                    ],
+               "Rotules / Direction" =>
+                    [
+                        "Rotule de direction",
+                        "Biellette de direction",
+                        "Rotule de direction intérieure",
+                        "Joint-soufflet, direction",
+                        "Barre de direction"
+                    ],
+               "Moyeux et Roulements" =>
+                [
+                    "Roulement de roue",
+                    "Moyeu de roue",
+                    "Circlip",
+                    "Bague d'étanchéité, roulement de roue"
+                ],
+                "Transmission" =>
+                    [
+                        "Cardan",
+                        "Tête de cardan, Joint homocinétique",
+                        "Soufflet de cardans",
+                        "Bague d'étanchéité, différentiel",
+                        "Joint, arbre longitudinal",
+                        "Palier central d'arbre de transmission",
+                        "Croisillon de transmission, satellite-différentiel"
+                    ],
+                "Direction" =>
+                    [
+                        "Crémaillère de direction",
+                        "Pompe de direction assistée",
+                        "Soufflets de direction",
+                        "Colonne de direction",
+                        "Jeu de joints-soufflets, direction"
+                    ],
+                "Butées" =>
+                    [
+                        "Butée simple de jambe élastique (coupelle, semelle)",
+                        "Butée élastique, suspension",
+                        "Anneau, palier-support jambe de suspension",
+                        "Joint, butée simple de jambe élastique"
+                    ],
+                "Kits de réparation et d'assemblage" =>
+                    [
+                        "Kit de réparation, suspension du stabilisateur",
+                        "Kit de réparation, suspension de roue"
+                    ],
+                "Ressorts et Soufflets" =>
+                    [
+                        "Ressort",
+                        "Soufflets d'amortisseur",
+                        "Lame de ressort",
+                        "Coussinet de palier, ressort à lames",
+                        "Bride de ressort"
+                    ],
+                "Autres pièces Suspension" =>
+                    [
+                        "Suspension, stabilisateur",
+                        "Coussinet de palier, stabilisateur",
+                        "Fusée d'essieu, suspension de roue"
+                    ],
+                "Sphères" =>
+                    [
+                        "Accumulateur de, suspension/amortissement (Sphère)"
+                    ],
+                "Suspension Pneumatique" =>
+                    [
+                        "Ressort pneumatique, châssis"
+                    ],
+                "Rotules / Suspension" =>
+                    [
+                        "Biellette de barre stabilisatrice",
+                        "Rotule de suspension",
+                        "Vis de serrage, suspension articulée/rotule de suspension"
+
                     ],
             // Freinage
                "Plaquettes de frein" =>
@@ -335,6 +408,43 @@ class CategorySeeder extends Seeder
                            "Vis, disque de frein",
                            "Déflecteur, disque de frein"
                     ],
+               "Hydraulique" =>
+                    [
+                        "Liquide de frein",
+                        "Étrier de frein neuf",
+                        "Étrier de frein échange standard",
+                        "Kit de réparation, étrier de frein",
+                        "Flexible de frein",
+                        "Maître-cylindre de frein",
+                        "Accumulateur de pression, freinage",
+                        "Régulateur (correcteur) de la force de freinage",
+                        "Piston, étrier de frein"
+                    ],
+               "Freins à tambours" =>
+                    [
+                        "Cylindre de roue",
+                        "Jeu de mâchoires de frein, frein de stationnement",
+                        "Kit de freins, freins à tambours",
+                        "Jeu de 4 mâchoires de frein",
+                        "Jeu de 2 tambours de frein",
+                        "Kit d'accessoires, mâchoire de frein"
+
+                    ],
+               "Capteurs et câbles de freinage" =>
+                    [
+                        "Capteur ABS",
+                        "Câble de frein à main",
+                        "Interrupteur des feux de freins",
+                        "Anneau de palpeur, ABS"
+                    ],
+               "Assistance au freinage" =>
+                    [
+                       "Servo-frein",
+                       "Pompe à vide, système de freinage",
+                       "Joint, pompe à vide"
+                    ],
+
+
             //Filtration
                "Filtres" =>
                     [
@@ -352,7 +462,16 @@ class CategorySeeder extends Seeder
                        "Boîtier, filtre de carburant",
                        "Kit de filtres hyrauliques, transmission automatique"
                     ],
-                // Démarrage et Charge
+               "Huile / Accessoires vidange" =>
+                    [
+                        "Huile moteur",
+                        "Joint de bouchon vidange",
+                        "Bouchon de vidange",
+                        "Clé pour filtre à huile"
+
+                    ],
+
+               // Démarrage et Charge
                "Batteries" =>
                     [
                        "Batterie voiture",
@@ -525,8 +644,48 @@ class CategorySeeder extends Seeder
                        "Interrupteur, lève-vitre",
                        "Moteur électrique, lève-vitre"
                     ],
-            // Pneus et Equipements Roue
+               "Serrure / Fermeture" =>
+                    [
+                       "Bouchon, réservoir de carburant",
+                       "Serrure de porte",
+                       "Poignée de porte",
+                       "Cylindre de serrure",
+                       "Élément d'ajustage, verrouillage central"
+                    ],
+               "Commandes et Pédalier" =>
+                    [
+                        "Commutateur de colonne de direction",
+                        "Interrupteur de commande, régulateur de vitesse",
+                        "Comodo d'éclairage",
+                        "Revêtement de la pédale, pédale d'embrayage"
+                    ],
+               "Electricité" =>
+                    [
+                        "Interrupteur",
+                        "Connecteur de câbles",
+                        "Fusible",
+                        "Porte-fusibles"
+                    ],
+               "Autres pièces d'habitacle" =>
+                    [
+                        "Ressort tournant, Airbag",
+                        "Cale-porte",
+                        "Guidage à galets, porte coulissante",
+                        "Capteur, qualité de l'air"
+                    ],
+               "Klaxon, avertisseurs sonores" =>
+                    [
+                      "Avertisseur sonore / Klaxon"
+                    ],
+               "Joints d'habitacle" =>
+                    [
+                        "Joint d'étanchéité de porte",
+                        "Joint d'étanchéité, pare-brise",
+                        "Joint d'étanchéité, vitre arrière"
+                    ],
 
+
+            // Pneus et Equipements Roue
                "Chaînes-neiges et Equipements Roue" =>
                     [
                        "Boulon de roue",
@@ -552,6 +711,36 @@ class CategorySeeder extends Seeder
                        "Dégrippant",
                        "Entretien carrosserie"
                     ],
+               "Réparation et Maintenance" =>
+                    [
+                        "Nettoyant pour freins/embrayage",
+                        "Pâte à joints",
+                        "Kit de réparation, palpeur des roues (contrôle press° pneus)",
+                        "Démarreur moteur"
+                    ],
+               "Nettoyage et Protection de l'Habitacle" =>
+                         [
+                             "Nettoyant pour textiles/tapis",
+                             "Nettoyant multi-usages",
+                             "Produit d'entretien pour plastiques",
+                             "Désinfectant Habitacle",
+                             "Nettoyant pour plastiques"
+                         ],
+               "Liquides de fonctionnement" =>
+                         [
+                             "Liquide de frein",
+                             "Liquides refroidissement",
+                             "Antigel",
+                             "Lave-glace",
+                             "Huile pour transmission automatique",
+                             "Huile hydraulique"
+                         ],
+               "Accessoires Nettoyage" =>
+                         [
+                             "Savon pour les mains",
+                             "Bobine d'essuyage"
+
+                         ],
             // Attelage et Portage
                "Attelage" =>
                     [
@@ -577,6 +766,45 @@ class CategorySeeder extends Seeder
                                "Capuchon, crochet de remorquage",
                                "Support de lampe, feu arrière"
                     ],
+               "Portières" =>
+                    [
+                        "Kit d'assemblage, porte",
+                        "Baguette et bande protectrice, porte",
+                        "Marche-pied",
+                        "Panneau latéral"
+                    ],
+               "Partie avant" =>
+                    [
+                        "Fixation de phare",
+                        "Grille de pare-chocs",
+                        "Support projecteur principal",
+                        "Grille de radiateur",
+                        "Cadre, grille de radiateur",
+                        "Enjoliveur, projecteur antibrouillard",
+                        "Support de plaque d'immatriculation"
+
+                    ],
+               "Ailes" =>
+                    [
+                        "Aile",
+                        "Kit de montage, aile",
+                        "Passage de roue",
+                        "Élargisseur d'aile"
+                    ],
+
+               "Capot" =>
+                    [
+                        "Capot-moteur",
+                        "Kit d'assemblage, capot-moteur"
+                    ],
+               "Vitres" =>
+                    [
+                       "Cadre de pare-brise"
+                    ],
+                "Grille de radiateur" =>
+                    [
+                       "Grille de radiateur"
+                    ],
             // Outillage
                "Outillage divers & coffrets" =>
                     [
@@ -600,15 +828,15 @@ class CategorySeeder extends Seeder
                     'nom' => $subcategory
                 ]);
 
-                if(array_key_exists($subcategory, $subcategories2))
-                {
+                // if(array_key_exists($subcategory, $subcategories2))
+                // {
                     foreach($subcategories2[$subcategory] as  $subcategory2)
                 {
                     Subcategory2::create([
                         'subcategory_id' => $j,
                         'nom' => $subcategory2
                     ]);
-                }
+                // }
                 }
                 $j++;
             }
