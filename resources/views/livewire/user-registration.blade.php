@@ -36,7 +36,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input type="phone" class="form-control"
+                                <input type="phone" id="test" class="form-control"
                                         wire:model="phone" >                                    
                             </div>
                             <span class="text-danger">@error('phone'){{ $message }}@enderror</span>
