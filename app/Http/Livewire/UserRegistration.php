@@ -10,14 +10,25 @@ use Livewire\Component;
 class UserRegistration extends Component
 {
     // Multi form parametres
-    public $currentStep=1;
+    public $currentStep=2;
     public $totalSteps =5;
     public $wilayas;
     public $selectedWilaya;
 
+    public $communes = [];
+    public $selectedCommune;
+
+    public $firstName;
+    public $lastName;
+    public $mobile;
+
+    public $type= "";
+
     public $username;
     public $password;
     public $passwordConfirm;
+
+
 
     public function mount()
     {
@@ -30,17 +41,36 @@ class UserRegistration extends Component
         return view('livewire.user-registration');
     }
 
+
+    public function updatedSelectedWilaya()
+    {
+        if($this->selectedWilaya){
+            $this->communes = [];
+        }else{
+            $this->communes = [];
+        }
+    }
+
+    public function updatedType()
+    {
+        // dd($this->type);
+    }
+
+
+
     public function increaseStep()
     {
         if($this->currentStep == 1){
             $this->validate([
-                'username' => ['required', 'string', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:6', 'confirmed'],
+                'firstName' => ['required', 'string', 'max:255'],
+                'lastName' => ['required', 'string', 'max:255'],
+                'mobile' => ['required', 'string', 'max:10', 'min:10'],
+                'selectedWilaya' => ['required'],
             ]);
             $this->currentStep = $this->currentStep + 1;
         }else{
             if($this->currentStep == 2){
-
+                $this->currentStep = $this->currentStep + 1;
             }else{
                 if($this->currentStep == 3){
 
