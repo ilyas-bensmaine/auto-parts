@@ -81,6 +81,15 @@
         </main>
     </div>
 
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- InputMask -->
+    <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+    <script src="{{asset('plugins/inputmask/jquery.inputmask.min.js')}}"></script>
     @yield('scripts')
+    @livewireScripts
+    @stack('js')
 </body>
 </html>

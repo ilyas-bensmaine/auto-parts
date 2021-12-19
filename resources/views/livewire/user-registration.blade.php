@@ -1,139 +1,645 @@
-<div>
-    <form wire:submit.prevent="register">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form wire:submit.prevent="register">
 
-        {{-- STEP 1 --}}
+                {{-- STEP 1 --}}
 
-        
-        @if ($currentStep == 1)
-        <div class="step-one">
-            <div class="card">
-                <div class="card-header bg-secondary text-white">Etape 1/4 - Détails personnels </div>
-                
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Prenom</label>
-                                <input type="text" class="form-control" placeholder="Entrez votre prénom"
-                                    wire:model="first_name">
-                                <span class="text-danger">@error('first_name'){{ $message }}@enderror</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Nom</label>
-                                <input type="text" class="form-control" placeholder="Entrez votre nom"
-                                    wire:model="last_name">
-                                <span class="text-danger">@error('last_name'){{ $message }}@enderror</span>
-                            </div>
-                        </div>
-                    </div>
+                <style>
+                    label {
+                        width: 100%;
+                        font-size: 1rem;
+                    }
 
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="phone">N° de téléphone</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    .card-input-element+.card {
+                        height: calc(36px + 2*1rem);
+                        color: var(--primary);
+                        -webkit-box-shadow: none;
+                        box-shadow: none;
+                        border: 2px solid transparent;
+                        border-radius: 4px;
+                    }
+
+                    .card-input-element+.card:hover {
+                        cursor: pointer;
+                    }
+
+                    .card-input-element:checked+.card {
+                        border: 2px solid var(--primary);
+                        -webkit-transition: border .3s;
+                        -o-transition: border .3s;
+                        transition: border .3s;
+                    }
+
+                    .card-input-element:checked+.card::after {
+                        /* content: '\e5ca';
+                        color: #AFB8EA;
+                        font-family: 'Material Icons'; */
+                        font-size: 24px;
+                        -webkit-animation-name: fadeInCheckbox;
+                        animation-name: fadeInCheckbox;
+                        -webkit-animation-duration: .5s;
+                        animation-duration: .5s;
+                        -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+
+                    @-webkit-keyframes fadeInCheckbox {
+                        from {
+                            opacity: 0;
+                            -webkit-transform: rotateZ(-20deg);
+                        }
+
+                        to {
+                            opacity: 1;
+                            -webkit-transform: rotateZ(0deg);
+                        }
+                    }
+
+                    @keyframes fadeInCheckbox {
+                        from {
+                            opacity: 0;
+                            transform: rotateZ(-20deg);
+                        }
+
+                        to {
+                            opacity: 1;
+                            transform: rotateZ(0deg);
+                        }
+                    }
+
+                </style>
+
+                @if ($currentStep == 1)
+                <div class="step-one">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">Etape 1/4 - Détails personnels </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Prenom</label>
+                                        <input type="text" class="form-control" placeholder="Entrez votre prénom"
+                                            wire:model="first_name">
+                                        <span class="text-danger">@error('first_name'){{ $message }}@enderror</span>
+                                    </div>
                                 </div>
-                                <input type="phone" id="test" class="form-control"
-                                        wire:model="phone" >                                    
-                            </div>
-                            <span class="text-danger">@error('phone'){{ $message }}@enderror</span>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="email">Email</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Nom</label>
+                                        <input type="text" class="form-control" placeholder="Entrez votre nom"
+                                            wire:model="last_name">
+                                        <span class="text-danger">@error('last_name'){{ $message }}@enderror</span>
+                                    </div>
                                 </div>
-                                <input type="email" class="form-control"
-                                        wire:model="email" >                                    
                             </div>
-                            <span class="text-danger">@error('email'){{ $message }}@enderror</span>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="phone">N° de téléphone</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="phone" id="test" class="form-control" wire:model="phone">
+                                    </div>
+                                    <span class="text-danger">@error('phone'){{ $message }}@enderror</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="email">Wilaya</label>
+                                    <select class="form-control" placeholder="Select input" wire:model="selectedWilaya">
+                                        <option value="">Select category</option>
+                                        @foreach ($wilayas as $wilaya)
+                                        <option value=" {{$wilaya->id}} ">{{$wilaya->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger">@error('email'){{ $message }}@enderror</span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="email">Commune</label>
+                                    <select class="form-control" placeholder="Select input" wire:model="selectedWilaya">
+                                        <option value="">Select category</option>
+                                        @foreach ($wilayas as $wilaya)
+                                        <option value=" {{$wilaya->id}} ">{{$wilaya->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger">@error('email'){{ $message }}@enderror</span>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-
                 </div>
-            </div>
-        </div>
-        @endif
+                @endif
 
-        {{-- STEP 2 --}}
+                {{-- STEP 2 --}}
 
-        @if ($currentStep == 2)
+                @if ($currentStep == 2)
+                <div class="step-two">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">STEP 2/4 - Address & Contacts</div>
+                        <div class="card-body">
+                            Ces informations seront utilisées pour vous permettre de vous connecter à notre plateforme.
 
+                            <label>
+                                <input type="radio" name="demo" class="card-input-element d-none" id="demo1">
+                                <div
+                                    class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                    Organization 1
+                                </div>
+                            </label>
+                            <label class="mt-3">
+                                <input type="radio" name="demo" class="card-input-element d-none" value="demo2">
+                                <div
+                                    class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                    Organization 2
+                                </div>
+                            </label>
 
-        <div class="step-two">
-            <div class="card">
-                <div class="card-header bg-secondary text-white">STEP 2/4 - Address & Contacts</div>
-                <div class="card-body">
-                    Ces informations seront utilisées pour vous permettre de vous connecter à notre plateforme.
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Username</label>
-                            <input type="text" class="form-control" placeholder="Entrez votre prénom"
-                                wire:model="username">
-                            <span class="text-danger">@error('username'){{ $message }}@enderror</span>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Mot de passe</label>
-                            <input type="password" class="form-control" 
-                                wire:model="password">
-                            <span class="text-danger">@error('password'){{ $message }}@enderror</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">confirmer le mot de passe</label>
-                            <input type="password" class="form-control" 
-                                wire:model="confirm_password">
-                            <span class="text-danger">@error('confirm_password'){{ $message }}@enderror</span>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
+                @endif
+                {{-- STEP 3 --}}
+
+                @if ($currentStep == 3)
+
+                <div class="step-two">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">STEP 2/4 - Address & Contacts</div>
+                        <div class="card-body">
+                            Ces informations seront utilisées pour vous permettre de vous connecter à notre plateforme.
+                            <section class="content pb-3">
+                                <div class="container-fluid h-100">
+                                    <div class="card-body row justify-content-center">
+                                        <div class="card card-info card-outline">
+                                            <div class="card-header">
+                                              <h5 class="card-title">Create Labels</h5>
+                                              <div class="card-tools">
+                                                <a href="#" class="btn btn-tool btn-link">#3</a>
+                                                <a href="#" class="btn btn-tool">
+                                                  <i class="fas fa-pen"></i>
+                                                </a>
+                                              </div>
+                                            </div>
+                                            <div class="card-body">
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" >
+                                                <label for="customCheckbox1" class="custom-control-label">Bug</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" >
+                                                <label for="customCheckbox2" class="custom-control-label">Feature</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" >
+                                                <label for="customCheckbox3" class="custom-control-label">Enhancement</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" >
+                                                <label for="customCheckbox4" class="custom-control-label">Documentation</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox5" >
+                                                <label for="customCheckbox5" class="custom-control-label">Examples</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" >
+                                                <label for="customCheckbox1" class="custom-control-label">Bug</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" >
+                                                <label for="customCheckbox2" class="custom-control-label">Feature</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" >
+                                                <label for="customCheckbox3" class="custom-control-label">Enhancement</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" >
+                                                <label for="customCheckbox4" class="custom-control-label">Documentation</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox5" >
+                                                <label for="customCheckbox5" class="custom-control-label">Examples</label>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="card card-info card-outline">
+                                            <div class="card-header">
+                                              <h5 class="card-title">Create Labels</h5>
+                                              <div class="card-tools">
+                                                <a href="#" class="btn btn-tool btn-link">#3</a>
+                                                <a href="#" class="btn btn-tool">
+                                                  <i class="fas fa-pen"></i>
+                                                </a>
+                                              </div>
+                                            </div>
+                                            <div class="card-body">
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" >
+                                                <label for="customCheckbox1" class="custom-control-label">Bug</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" >
+                                                <label for="customCheckbox2" class="custom-control-label">Feature</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" >
+                                                <label for="customCheckbox3" class="custom-control-label">Enhancement</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" >
+                                                <label for="customCheckbox4" class="custom-control-label">Documentation</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox5" >
+                                                <label for="customCheckbox5" class="custom-control-label">Examples</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" >
+                                                <label for="customCheckbox1" class="custom-control-label">Bug</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" >
+                                                <label for="customCheckbox2" class="custom-control-label">Feature</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" >
+                                                <label for="customCheckbox3" class="custom-control-label">Enhancement</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" >
+                                                <label for="customCheckbox4" class="custom-control-label">Documentation</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox5" >
+                                                <label for="customCheckbox5" class="custom-control-label">Examples</label>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="card card-info card-outline">
+                                            <div class="card-header">
+                                              <h5 class="card-title">Create Labels</h5>
+                                              <div class="card-tools">
+                                                <a href="#" class="btn btn-tool btn-link">#3</a>
+                                                <a href="#" class="btn btn-tool">
+                                                  <i class="fas fa-pen"></i>
+                                                </a>
+                                              </div>
+                                            </div>
+                                            <div class="card-body">
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" >
+                                                <label for="customCheckbox1" class="custom-control-label">Bug</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" >
+                                                <label for="customCheckbox2" class="custom-control-label">Feature</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" >
+                                                <label for="customCheckbox3" class="custom-control-label">Enhancement</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" >
+                                                <label for="customCheckbox4" class="custom-control-label">Documentation</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox5" >
+                                                <label for="customCheckbox5" class="custom-control-label">Examples</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" >
+                                                <label for="customCheckbox1" class="custom-control-label">Bug</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" >
+                                                <label for="customCheckbox2" class="custom-control-label">Feature</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" >
+                                                <label for="customCheckbox3" class="custom-control-label">Enhancement</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" >
+                                                <label for="customCheckbox4" class="custom-control-label">Documentation</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox5" >
+                                                <label for="customCheckbox5" class="custom-control-label">Examples</label>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="card card-info card-outline">
+                                            <div class="card-header">
+                                              <h5 class="card-title">Create Labels</h5>
+                                              <div class="card-tools">
+                                                <a href="#" class="btn btn-tool btn-link">#3</a>
+                                                <a href="#" class="btn btn-tool">
+                                                  <i class="fas fa-pen"></i>
+                                                </a>
+                                              </div>
+                                            </div>
+                                            <div class="card-body">
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" >
+                                                <label for="customCheckbox1" class="custom-control-label">Bug</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" >
+                                                <label for="customCheckbox2" class="custom-control-label">Feature</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" >
+                                                <label for="customCheckbox3" class="custom-control-label">Enhancement</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" >
+                                                <label for="customCheckbox4" class="custom-control-label">Documentation</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox5" >
+                                                <label for="customCheckbox5" class="custom-control-label">Examples</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" >
+                                                <label for="customCheckbox1" class="custom-control-label">Bug</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" >
+                                                <label for="customCheckbox2" class="custom-control-label">Feature</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" >
+                                                <label for="customCheckbox3" class="custom-control-label">Enhancement</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" >
+                                                <label for="customCheckbox4" class="custom-control-label">Documentation</label>
+                                              </div>
+                                              <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox" id="customCheckbox5" >
+                                                <label for="customCheckbox5" class="custom-control-label">Examples</label>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                {{-- STEP 4 --}}
+                @if ($currentStep == 4)
+                <div class="step-two">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">STEP 2/4 - Address & Contacts</div>
+                        <div class="card-body">
+                            Ces informations seront utilisées pour vous permettre de vous connecter à notre plateforme.
+
+                            <div class="row mt-4">
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" id="demo1">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Categorie 1
+                                        <img src="{{ asset('img/demarrage.png') }}" alt="demarrage">
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" id="demo1">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Categorie 2
+                                        <img src="{{ asset('img/demarrage.png') }}" alt="demarrage">
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" id="demo1">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Categorie 3
+                                        <img src="{{ asset('img/demarrage.png') }}" alt="demarrage">
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" id="demo1">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Categorie 4
+                                        <img src="{{ asset('img/demarrage.png') }}" alt="demarrage">
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                                <label class="col-md-3">
+                                    <input type="checkbox" name="demo" class="card-input-element d-none" value="demo2">
+                                    <div
+                                        class="card card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                                        Organization 2
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
+                @if ($currentStep == 5)
+                <div class="step-one">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">{{__('Etape 5/5 - Informations de connexion et de sécutité')}} </div>
+                        <div class="progress mb-1">
+                            <div class="progress-bar bg-success" role="progressbar"
+                                 aria-valuemax="100" style="width: 80%">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            Ces informations seront utilisées pour vous permettre de vous connecter à notre plateforme.
+
+                            <div class="row gap-y align-items-center">
+                                <div class="col-md-6 text-center text-md-left order-md-2">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <label for="">Nom d'utilisateur</label>
+                                                <input type="text" class="form-control" placeholder="Entrez votre nom d'utilisateur" required wire:model="username">
+                                                <span class="text-danger">@error('username'){{ $message }}@enderror</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <label for="">Mot de passe</label>
+                                                <input type="password" class="form-control" required wire:model="password">
+                                                <span class="text-danger">@error('password'){{ $message }}@enderror</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <label for="">Confirm mot de passe</label> 
+                                                <input type="password" class="form-control" required wire:model="passwordConfirm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="col-md-5 mx-auto p-8">
+                                  <img class="img-circle elevation-2 mb-1" src=" {{asset('dist/img/avatar.png')}} " alt="profile picture">
+                                  <div class="custom-file col-md-8">
+                                    <input type="file" class="custom-file-input" id="customFile" wire:model="userImage"
+                                        accept=".png, .jpg, .jpeg">
+                                    <label class="custom-file-label" for="customFile">{{('Photo de profile')}}</label>
+                                </div>
+                                </div>
+                    
+                              </div>
+
+
+                        </div>
+                        <div class="card-footer d-row d-flex justify-content-center bg-white pt-2 pb-2">
+                                <button type="button" class="btn btn-md btn-secondary mx-auto" wire:click="decreaseStep()"> <i class="fa fa-angle-left" aria-hidden="true"></i> {{__('Retour')}}</button>
+                                <button type="submit" class="btn btn-md btn-primary mx-auto"> {{__('Submit')}} <i class="fa fa-check" aria-hidden="true"></i> </button>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
+                {{-- <div class="card-footer ">
+
+                    @if ($currentStep == 1)
+                    <div></div>
+                    @endif
+
+                    @if ($currentStep == 2 || $currentStep == 3 || $currentStep == 4 || $currentStep == 5)
+                    <button type="button" class="btn btn-md btn-secondary" wire:click="decreaseStep()">Back</button>
+                    @endif
+
+                    @if ($currentStep == 1 || $currentStep == 2 || $currentStep == 3 || $currentStep == 4)
+                    <button type="button" class="btn btn-md btn-success" wire:click="increaseStep()">Next</button>
+                    @endif
+
+                    @if ($currentStep == 5)
+                    <button type="submit" class="btn btn-md btn-primary">Submit</button>
+                    @endif
+
+                </div> --}}
+
+            </form>
         </div>
-
-        @endif
-
-        <div class="action-buttons d-flex justify-content-between bg-white pt-2 pb-2">
-
-            @if ($currentStep == 1)
-            <div></div>
-            @endif
-
-            @if ($currentStep == 2 || $currentStep == 3)
-            <button type="button" class="btn btn-md btn-secondary" wire:click="decreaseStep()">Back</button>
-            @endif
-
-            @if ($currentStep == 1)
-            <button type="button" class="btn btn-md btn-success" wire:click="increaseStep()">Next</button>
-            @endif
-
-            @if ($currentStep == 4)
-            <button type="submit" class="btn btn-md btn-primary">Submit</button>
-            @endif
-
-        </div>
-
-    </form>
-    @push('js')
-    <script>
-    //     Money Euro
-        $('[data-mask]').inputmask()
-        $("#test").inputmask({
-            mask: "0X 99 99 99 99",
-            definitions: {'X': {validator: "5|6|7"}}
-        });
-    </script>
-    @endpush
+    </div>
 </div>
 
+
+
+@push('js')
+<script>
+    //     Money Euro
+    $('[data-mask]').inputmask()
+    $("#test").inputmask({
+        mask: "0X 99 99 99 99",
+        definitions: {
+            'X': {
+                validator: "5|6|7"
+            }
+        }
+    });
+
+</script>
+@endpush

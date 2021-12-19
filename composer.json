@@ -20,7 +20,8 @@
         "livewire/livewire": "^2.7",
         "pusher/pusher-php-server": "~4.0",
         "rinvex/laravel-subscriptions": "^6.0",
-        "spatie/laravel-permission": "^4.4"
+        "spatie/laravel-permission": "^4.4",
+        "taylornetwork/laravel-username-generator": "^2.6"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
